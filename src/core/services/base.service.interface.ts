@@ -1,11 +1,9 @@
-import { AxiosResponse } from 'axios';
-import { Observable } from 'rxjs';
+import { DeleteResult, InsertResult, UpdateResult } from 'typeorm';
 
 export interface IBaseService<TModel> {
-	setApiUrl(url: string): void;
-	findAll(): Observable<AxiosResponse<TModel[]>>;
-	findOne(id: number): Observable<AxiosResponse<TModel>>;
-	create(dto: TModel): Observable<AxiosResponse<TModel>>;
-	update(id: number, dto: TModel): Observable<AxiosResponse<TModel>>;
-	remove(id: number): Observable<AxiosResponse<TModel>>;
+	findAll(): Promise<TModel[]>;
+	findOne(id: any): Promise<TModel>;
+	create(dto: TModel): Promise<InsertResult>;
+	update(id: number, dto: TModel): Promise<UpdateResult>;
+	remove(id: number): Promise<DeleteResult>;
 }

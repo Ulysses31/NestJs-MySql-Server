@@ -12,9 +12,7 @@ import {
 	Version
 } from '@nestjs/common';
 import { BaseEditorController } from 'src/core/base-Editor-controller';
-import { AxiosResponse } from 'axios';
-import { Observable } from 'rxjs';
-import { CommentDto } from 'src/models/comment.dto';
+import { CommentEntity } from 'src/models/comment.entity';
 import { CommentService } from '../service/comments.service';
 import {
 	ApiTags,
@@ -33,11 +31,12 @@ import {
 	ApiOperation
 } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/core/authentication/jwt-auth.guard';
+import { InsertResult, UpdateResult, DeleteResult } from 'typeorm';
 
 @Controller('Comments')
-@UseGuards(JwtAuthGuard)
+// @UseGuards(JwtAuthGuard)
 @ApiTags('Comments')
-@ApiBearerAuth()
+// @ApiBearerAuth()
 @ApiBadRequestResponse({ description: 'Bad Request' })
 @ApiUnauthorizedResponse({ description: 'User not authorized' })
 @ApiForbiddenResponse({ description: 'Request is forbidden' })
@@ -48,7 +47,7 @@ import { JwtAuthGuard } from 'src/core/authentication/jwt-auth.guard';
 @ApiInternalServerErrorResponse({
 	description: 'Internal Server Error'
 })
-export class CommentsEditorController extends BaseEditorController<CommentDto> {
+export class CommentsEditorController extends BaseEditorController<CommentEntity> {
 	constructor(public commentservice: CommentService) {
 		super(commentservice);
 	}
@@ -57,7 +56,7 @@ export class CommentsEditorController extends BaseEditorController<CommentDto> {
 	@Version('1')
 	@ApiOperation({ description: 'Get comment by id' })
 	@ApiProduces('application/json', 'application/xml')
-	@ApiOkResponse({ description: 'OK success', type: CommentDto })
+	@ApiOkResponse({ description: 'OK success', type: CommentEntity })
 	findByIdV1(
 		@Param(
 			'id',
@@ -65,36 +64,34 @@ export class CommentsEditorController extends BaseEditorController<CommentDto> {
 				errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE
 			})
 		)
-		id: number
-	): Observable<AxiosResponse<CommentDto>> {
+		id: string
+	): Promise<CommentEntity> {
 		return this.findDtoById(id);
 	}
 
 	@Post()
 	@Version('1')
 	@ApiOperation({ description: 'Insert new comment' })
-	@ApiBody({ type: CommentDto })
+	@ApiBody({ type: CommentEntity })
 	@ApiProduces('application/json', 'application/xml')
 	@ApiConsumes('application/json', 'application/xml')
 	@ApiCreatedResponse({
 		description: 'The record has been successfully created',
-		type: CommentDto
+		type: CommentEntity
 	})
-	newDtoV1(
-		@Body() dto: CommentDto
-	): Observable<AxiosResponse<CommentDto>> {
+	newDtoV1(@Body() dto: CommentEntity): Promise<InsertResult> {
 		return this.insertNewDto(dto);
 	}
 
 	@Put(':id')
 	@Version('1')
 	@ApiOperation({ description: 'Update existing comment' })
-	@ApiBody({ type: CommentDto })
+	@ApiBody({ type: CommentEntity })
 	@ApiProduces('application/json', 'application/xml')
 	@ApiConsumes('application/json', 'application/xml')
 	@ApiOkResponse({
 		description: 'The record has been successfully updated',
-		type: CommentDto
+		type: CommentEntity
 	})
 	updateDtoV1(
 		@Param(
@@ -104,8 +101,8 @@ export class CommentsEditorController extends BaseEditorController<CommentDto> {
 			})
 		)
 		id: number,
-		@Body() dto: CommentDto
-	): Observable<AxiosResponse<CommentDto>> {
+		@Body() dto: CommentEntity
+	): Promise<UpdateResult> {
 		return this.modifyDto(id, dto);
 	}
 
@@ -115,7 +112,7 @@ export class CommentsEditorController extends BaseEditorController<CommentDto> {
 	@ApiProduces('application/json', 'application/xml')
 	@ApiOkResponse({
 		description: 'The record has been successfully deleted',
-		type: CommentDto
+		type: CommentEntity
 	})
 	deleteDtoV1(
 		@Param(
@@ -125,7 +122,7 @@ export class CommentsEditorController extends BaseEditorController<CommentDto> {
 			})
 		)
 		id: number
-	): Observable<AxiosResponse<CommentDto>> {
+	): Promise<DeleteResult> {
 		return this.removeDto(id);
 	}
 }

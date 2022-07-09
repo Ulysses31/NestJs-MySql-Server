@@ -1,14 +1,15 @@
 import { Injectable } from '@nestjs/common';
-import { User } from 'src/core/models/user-model-dto';
+import { UserEntity } from 'src/core/models/user.entity';
 
 @Injectable()
 export class UsersAuthService {
-	private readonly users: User[] = [
+	private readonly users: UserEntity[] = [
 		{
 			id: '1',
 			username: 'john',
 			password: 'changeme',
 			email: 'admin@test.com',
+			isActive: true,
 			access_token: '',
 			refresh_token: ''
 		},
@@ -17,27 +18,28 @@ export class UsersAuthService {
 			username: 'maria',
 			password: 'guess',
 			email: 'user@test.com',
+			isActive: true,
 			access_token: '',
 			refresh_token: ''
 		}
 	];
 
-	async findOne(username: string): Promise<User | undefined> {
+	async findOne(username: string): Promise<UserEntity | undefined> {
 		return this.users.find(
-			(user: User) => user.username === username
+			(user: UserEntity) => user.username === username
 		);
 	}
 
-	async getUserByEmail(email: string): Promise<User | undefined> {
-		return this.users.find((user: User) => user.email === email);
+	async getUserByEmail(email: string): Promise<UserEntity | undefined> {
+		return this.users.find((user: UserEntity) => user.email === email);
 	}
 
 	async updateUsersTokens(
 		id: string,
 		access_token: string,
 		refresh_token: string
-	): Promise<User | undefined> {
-		var usr: User = this.users.find((item) => item.id === id);
+	): Promise<UserEntity | undefined> {
+		var usr: UserEntity = this.users.find((item) => item.id === id);
 		usr.access_token = access_token;
 		usr.refresh_token = refresh_token;
 		return usr;

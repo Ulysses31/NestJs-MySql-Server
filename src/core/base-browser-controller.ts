@@ -1,18 +1,16 @@
-import { Observable } from 'rxjs';
-import { AxiosResponse } from 'axios';
 import { BaseService } from './services/base.service';
-import { BaseModelDto } from './models/base-model-dto';
+import { BaseEntity } from './models/base.entity';
 
 export abstract class BaseBrowserController<
-	TModel extends BaseModelDto
+	TModel extends BaseEntity
 > {
 	model?: TModel[] = [];
 
-	abstract findAllV1(): Observable<AxiosResponse<TModel[]>>;
+	abstract findAllV1(): Promise<TModel[]>;
 
 	constructor(public baseService: BaseService<TModel>) {}
 
-	findDtoAll(): Observable<AxiosResponse<TModel[]>> {
+	findDtoAll(): Promise<TModel[]> {
 		return this.baseService.findAll();
 	}
 }

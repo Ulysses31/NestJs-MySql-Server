@@ -1,14 +1,16 @@
 import { Injectable } from '@nestjs/common';
-import { HttpService } from '@nestjs/axios';
+import { InjectRepository } from '@nestjs/typeorm';
 import { BaseService } from 'src/core/services/base.service';
-import { CommentDto } from 'src/models/comment.dto';
+import { CommentEntity } from 'src/models/comment.entity';
+import { Repository } from 'typeorm';
+import { CommentsRepository } from './comments-repository';
 
 @Injectable()
-export class CommentService extends BaseService<CommentDto> {
-	apiUrl: string = process.env.API_URL_COMMENTS;
-
-	constructor(public readonly httpService: HttpService) {
-		super(httpService);
-		this.setApiUrl(this.apiUrl);
+export class CommentService extends BaseService<CommentEntity> {
+	constructor(
+		@InjectRepository(CommentsRepository)
+		public readonly bsRepo: Repository<CommentEntity>
+	) {
+		super(bsRepo);
 	}
 }

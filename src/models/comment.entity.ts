@@ -1,13 +1,16 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { BaseModelDto } from './../core/models/base-model-dto';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity } from './../core/models/base.entity';
 
-export class CommentDto extends BaseModelDto {
+@Entity({ name: 'comments' })
+export class CommentEntity extends BaseEntity {
 	@ApiProperty({
 		type: String,
 		description: 'ID',
 		nullable: false,
 		required: true
 	})
+	@PrimaryGeneratedColumn()
 	id?: null | string;
 
 	@ApiProperty({
@@ -16,6 +19,7 @@ export class CommentDto extends BaseModelDto {
 		nullable: false,
 		required: true
 	})
+	@Column()
 	postId?: null | string;
 
 	@ApiProperty({
@@ -24,6 +28,7 @@ export class CommentDto extends BaseModelDto {
 		nullable: false,
 		required: true
 	})
+	@Column()
 	name?: null | string;
 
 	@ApiProperty({
@@ -32,6 +37,7 @@ export class CommentDto extends BaseModelDto {
 		nullable: false,
 		required: true
 	})
+	@Column()
 	email?: null | string;
 
 	@ApiProperty({
@@ -40,5 +46,6 @@ export class CommentDto extends BaseModelDto {
 		nullable: false,
 		required: true
 	})
+	@Column()
 	body?: null | string;
 }

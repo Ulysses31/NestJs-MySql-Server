@@ -10,7 +10,7 @@ import {
 	Version
 } from '@nestjs/common';
 import { AuthService } from './core/authentication/services/auth.service';
-import { User } from './core/models/user-model-dto';
+import { UserEntity } from './core/models/user.entity';
 import {
 	ApiBadRequestResponse,
 	ApiUnauthorizedResponse,
@@ -25,12 +25,11 @@ import {
 	ApiBearerAuth,
 	ApiExcludeEndpoint
 } from '@nestjs/swagger';
-import { UserDto } from './models/user.dto';
 
 @Controller('Auth')
 @ApiTags('Auth')
 @ApiBadRequestResponse({ description: 'Bad Request' })
-@ApiUnauthorizedResponse({ description: 'User not authorized' })
+@ApiUnauthorizedResponse({ description: 'UserEntity not authorized' })
 @ApiForbiddenResponse({ description: 'Request is forbidden' })
 @ApiNotFoundResponse({ description: 'Request not found' })
 @ApiNotAcceptableResponse({
@@ -47,9 +46,9 @@ export class AppController {
 	@UseGuards(LocalAuthGuard)
 	@ApiExcludeEndpoint()
 	@ApiProduces('application/json', 'application/xml')
-	@ApiOkResponse({ description: 'OK success', type: UserDto })
+	@ApiOkResponse({ description: 'OK success', type: UserEntity })
 	async login(@Request() req) {
-		return this.authService.login(req.user as User);
+		return this.authService.login(req.user as UserEntity);
 	}
 
 	@Get('profile')
@@ -58,7 +57,7 @@ export class AppController {
 	@ApiBearerAuth()
 	@ApiExcludeEndpoint()
 	@ApiProduces('application/json', 'application/xml')
-	@ApiOkResponse({ description: 'OK success', type: UserDto })
+	@ApiOkResponse({ description: 'OK success', type: UserEntity })
 	getProfile(@Request() req) {
 		return req.user;
 	}
@@ -69,7 +68,7 @@ export class AppController {
 	@ApiBearerAuth()
 	@ApiExcludeEndpoint()
 	@ApiProduces('application/json', 'application/xml')
-	@ApiOkResponse({ description: 'OK success', type: UserDto })
+	@ApiOkResponse({ description: 'OK success', type: UserEntity })
 	async refreshToken(@Request() req) {
 		console.log(req.body);
 		return this.authService.createAccessTokenFromRefreshToken(

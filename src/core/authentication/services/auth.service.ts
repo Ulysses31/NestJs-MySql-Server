@@ -8,7 +8,7 @@ import {
 } from '@nestjs/common';
 import { UsersAuthService } from '../users-auth/services/users-auth.service';
 import { JwtService } from '@nestjs/jwt';
-import { User } from 'src/core/models/user-model-dto';
+import { UserEntity } from 'src/core/models/user.entity';
 
 @Injectable()
 export class AuthService {
@@ -27,7 +27,7 @@ export class AuthService {
 		return null;
 	}
 
-	async login(user: User) {
+	async login(user: UserEntity) {
 		const payload = { username: user.username, sub: user.id };
 
 		var accToken: string = this.jwtService.sign(payload, {
@@ -66,19 +66,19 @@ export class AuthService {
 
 	async createAccessTokenFromRefreshToken(refreshToken: string) {
 		try {
-			const decoded = this.jwtService.decode(refreshToken) as User;
+			const decoded = this.jwtService.decode(refreshToken) as UserEntity;
 
 			if (!decoded) {
 				throw new Error();
 			}
 
-			const user: User = await this.usersService.findOne(
+			const user: UserEntity = await this.usersService.findOne(
 				decoded.username
 			);
 
 			if (!user) {
 				throw new HttpException(
-					'User with this id does not exist',
+					'UserEntity with this id does not exist',
 					HttpStatus.NOT_FOUND
 				);
 			}
