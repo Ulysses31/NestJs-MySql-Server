@@ -1,3 +1,28 @@
+import { EmployeesRepository } from './features/employees/service/employees-repository';
+import { EmployeesService } from './features/employees/service/employees.service';
+import { CustomersRepository } from './features/customers/service/customers-repository';
+import { CustomersService } from './features/customers/service/customers.service';
+import { CustomerCustomerDemosSubscriber } from './features/customer-customer-demo/service/customer-customer-demo.subscriber';
+import { CustomerCustomerDemoModule } from './features/customer-customer-demo/customer-customer-demo.module';
+import { EmployeesTerritoriesSubscriber } from './features/employees-territories/service/employees-territories.subscriber';
+import { EmployeeTerritoryModule } from './features/employees-territories/employees-territories.module';
+import { CustomerDemographicsSubscriber } from './features/customer-demographic/service/customer-demographic.subscriber';
+import { TerritoriesSubscriber } from './features/territories/service/territories.subscriber';
+import { TerritoryModule } from './features/territories/territories.module';
+import { SuppliersSubscriber } from './features/suppliers/service/suppliers.subscriber';
+import { SupplierModule } from './features/suppliers/suppliers.module';
+import { ShippersSubscriber } from './features/shippers/service/shippers.subscriber';
+import { ShipperModule } from './features/shippers/shippers.module';
+import { RegionsSubscriber } from './features/regions/service/regions.subscriber';
+import { RegionModule } from './features/regions/regions.module';
+import { EmployeesSubscriber } from './features/employees/service/employees.subscriber';
+import { EmployeesModule } from './features/employees/employees.module';
+import { CustomersSubscriber } from './features/customers/service/customers.subscriber';
+import { OrdersSubscriber } from './features/orders/service/orders.subscriber';
+import { OrderModule } from './features/orders/orders.module';
+import { OrderDetailsSubscriber } from './features/order-details/service/order-details.subscriber';
+import { ProductsSubscriber } from './features/products/service/products.subscriber';
+import { ProductModule } from './features/products/products.module';
 import { CategoriesSubscriber } from './features/categories/service/categories.subscriber';
 import { BaseRepository } from './core/services/base-repository';
 import { BaseService } from './core/services/base.service';
@@ -10,6 +35,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserEntity } from './core/models/user.entity';
 import { BaseSubscriber } from './core/services/base.subscriber';
 import { CategoryModule } from './features/categories/categories.module';
+import { OrderDetailModule } from './features/order-details/order-details.module';
+import { CustomerModule } from './features/customers/customers.module';
+import { CustomerDemographicModule } from './features/customer-demographic/customer-demographic.module';
 
 @Module({
 	imports: [
@@ -25,14 +53,41 @@ import { CategoryModule } from './features/categories/categories.module';
 			password: process.env.DATABASE_PASSWORD,
 			database: process.env.DATABASE,
 			entities: [UserEntity],
-			subscribers: [BaseSubscriber, CategoriesSubscriber],
+			subscribers: [
+				BaseSubscriber,
+				CategoriesSubscriber,
+				ProductsSubscriber,
+				OrdersSubscriber,
+				OrderDetailsSubscriber,
+				CustomersSubscriber,
+				EmployeesSubscriber,
+				RegionsSubscriber,
+				ShippersSubscriber,
+				SuppliersSubscriber,
+				TerritoriesSubscriber,
+				CustomerDemographicsSubscriber,
+				EmployeesTerritoriesSubscriber,
+				CustomerCustomerDemosSubscriber
+			],
 			autoLoadEntities: true,
 			debug: process.env.DATABASE_DEBUG === 'true',
 			logger: 'debug',
 			synchronize: process.env.DATABASE_SYNC === 'true' // only in develepment mode is true
 		}),
 		AuthModule,
-		CategoryModule
+		CategoryModule,
+		ProductModule,
+		EmployeesModule,
+		OrderModule,
+		OrderDetailModule,
+		CustomerModule,
+		RegionModule,
+		ShipperModule,
+		SupplierModule,
+		TerritoryModule,
+		CustomerDemographicModule,
+		EmployeeTerritoryModule,
+		CustomerCustomerDemoModule
 	],
 	controllers: [AppController],
 	providers: [BaseService, BaseRepository, BaseSubscriber]

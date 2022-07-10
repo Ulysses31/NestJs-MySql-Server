@@ -1,3 +1,4 @@
+import { BaseEntity } from './../core/models/base.entity';
 import { ShipperEntity } from './shipper.entity';
 import { EmployeeEntity } from './employee.entity';
 import { CustomerEntity } from './customer.entity';
@@ -15,7 +16,7 @@ import {
 @Index('FK_Orders_Employees', ['employeeId'], {})
 @Index('FK_Orders_Shippers', ['shipVia'], {})
 @Entity({ name: 'orders', schema: 'northwind' })
-export class OrderEntity {
+export class OrderEntity extends BaseEntity {
 	@Column('int', { primary: true, name: 'OrderID' })
 	orderId: number;
 

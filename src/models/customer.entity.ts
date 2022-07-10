@@ -1,9 +1,10 @@
+import { BaseEntity } from './../core/models/base.entity';
 import { CustomerDemographicEntity } from './customer-demographic.entity';
 import { Column, Entity, ManyToMany, OneToMany } from 'typeorm';
 import { OrderEntity } from './order.entity';
 
 @Entity({ name: 'customers', schema: 'northwind' })
-export class CustomerEntity {
+export class CustomerEntity extends BaseEntity {
 	@Column('char', { primary: true, name: 'CustomerID', length: 5 })
 	customerId: string;
 

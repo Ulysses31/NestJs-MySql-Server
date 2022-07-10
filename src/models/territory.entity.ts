@@ -1,3 +1,4 @@
+import { BaseEntity } from './../core/models/base.entity';
 import { RegionEntity } from './region.entity';
 import { EmployeeEntity } from './employee.entity';
 import {
@@ -11,7 +12,7 @@ import {
 
 @Index('FK_Territories_Region', ['regionId'], {})
 @Entity({ name: 'territories', schema: 'northwind' })
-export class TerritoryEntity {
+export class TerritoryEntity extends BaseEntity {
 	@Column('varchar', {
 		primary: true,
 		name: 'TerritoryID',

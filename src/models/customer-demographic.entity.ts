@@ -1,8 +1,9 @@
+import { BaseEntity } from './../core/models/base.entity';
 import { CustomerEntity } from './customer.entity';
 import { Column, Entity, JoinTable, ManyToMany } from 'typeorm';
 
 @Entity('customerdemographics', { schema: 'northwind' })
-export class CustomerDemographicEntity {
+export class CustomerDemographicEntity extends BaseEntity {
 	@Column('char', {
 		primary: true,
 		name: 'CustomerTypeID',

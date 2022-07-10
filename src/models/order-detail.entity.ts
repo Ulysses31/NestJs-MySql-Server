@@ -1,3 +1,4 @@
+import { BaseEntity } from './../core/models/base.entity';
 import { ProductEntity } from './product.entity';
 import { OrderEntity } from './order.entity';
 import {
@@ -10,7 +11,7 @@ import {
 
 @Index('FK_Order_Details_Products', ['productId'], {})
 @Entity({ name: 'order details', schema: 'northwind' })
-export class OrderDetailEntity {
+export class OrderDetailEntity extends BaseEntity {
 	@Column('int', { primary: true, name: 'OrderID' })
 	orderId: number;
 
