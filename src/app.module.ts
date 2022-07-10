@@ -1,5 +1,5 @@
+import { CategoriesSubscriber } from './features/categories/service/categories.subscriber';
 import { BaseRepository } from './core/services/base-repository';
-import { CommentModule } from './features/comments/comments.module';
 import { BaseService } from './core/services/base.service';
 import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { AppController } from './app.controller';
@@ -9,7 +9,7 @@ import { AuthModule } from './core/authentication/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserEntity } from './core/models/user.entity';
 import { BaseSubscriber } from './core/services/base.subscriber';
-import { CommentsSubscriber } from './features/comments/service/comments.subscriber';
+import { CategoryModule } from './features/categories/categories.module';
 
 @Module({
 	imports: [
@@ -25,20 +25,20 @@ import { CommentsSubscriber } from './features/comments/service/comments.subscri
 			password: process.env.DATABASE_PASSWORD,
 			database: process.env.DATABASE,
 			entities: [UserEntity],
-			subscribers: [BaseSubscriber, CommentsSubscriber],
+			subscribers: [BaseSubscriber, CategoriesSubscriber],
 			autoLoadEntities: true,
 			debug: process.env.DATABASE_DEBUG === 'true',
 			logger: 'debug',
 			synchronize: process.env.DATABASE_SYNC === 'true' // only in develepment mode is true
 		}),
 		AuthModule,
-		CommentModule
+		CategoryModule
 	],
 	controllers: [AppController],
 	providers: [BaseService, BaseRepository, BaseSubscriber]
 })
 export class AppModule {
 	configure(consumer: MiddlewareConsumer) {
-		consumer.apply(DbMiddleware).forRoutes('comments');
+		consumer.apply(DbMiddleware).forRoutes('categories');
 	}
 }

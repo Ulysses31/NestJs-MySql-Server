@@ -1,7 +1,5 @@
 import { Controller, Get, UseGuards, Version } from '@nestjs/common';
 import { BaseBrowserController } from 'src/core/base-browser-controller';
-import { CommentEntity } from 'src/models/comment.entity';
-import { CommentService } from '../service/comments.service';
 import {
 	ApiTags,
 	ApiBadRequestResponse,
@@ -16,10 +14,12 @@ import {
 	ApiOperation
 } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/core/authentication/jwt-auth.guard';
+import { CategoriesService } from '../service/categories.service';
+import { CategoryEntity } from 'src/models/category.entity';
 
-@Controller('Comments')
+@Controller('Categories')
 //@UseGuards(JwtAuthGuard)
-@ApiTags('Comments')
+@ApiTags('Categories')
 //@ApiBearerAuth()
 @ApiBadRequestResponse({ description: 'Bad Request' })
 @ApiUnauthorizedResponse({ description: 'User not authorized' })
@@ -31,17 +31,17 @@ import { JwtAuthGuard } from 'src/core/authentication/jwt-auth.guard';
 @ApiInternalServerErrorResponse({
 	description: 'Internal Server Error'
 })
-export class CommentsBrowserController extends BaseBrowserController<CommentEntity> {
-	constructor(public commentsService: CommentService) {
-		super(commentsService);
+export class CategoriesBrowserController extends BaseBrowserController<CategoryEntity> {
+	constructor(public categoriesService: CategoriesService) {
+		super(categoriesService);
 	}
 
 	@Get()
 	@Version('1')
-	@ApiOperation({ description: 'List of comments' })
+	@ApiOperation({ description: 'List of Categories' })
 	@ApiProduces('application/json', 'application/xml')
-	@ApiOkResponse({ description: 'OK success', type: CommentEntity })
-	findAllV1(): Promise<CommentEntity[]> {
+	@ApiOkResponse({ description: 'OK success', type: CategoryEntity })
+	findAllV1(): Promise<CategoryEntity[]> {
 		return this.findDtoAll();
 	}
 }

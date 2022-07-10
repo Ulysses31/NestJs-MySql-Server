@@ -12,8 +12,6 @@ import {
 	Version
 } from '@nestjs/common';
 import { BaseEditorController } from 'src/core/base-Editor-controller';
-import { CommentEntity } from 'src/models/comment.entity';
-import { CommentService } from '../service/comments.service';
 import {
 	ApiTags,
 	ApiBadRequestResponse,
@@ -32,10 +30,12 @@ import {
 } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/core/authentication/jwt-auth.guard';
 import { InsertResult, UpdateResult, DeleteResult } from 'typeorm';
+import { CategoryEntity } from 'src/models/category.entity';
+import { CategoriesService } from '../service/categories.service';
 
-@Controller('Comments')
+@Controller('Categories')
 // @UseGuards(JwtAuthGuard)
-@ApiTags('Comments')
+@ApiTags('Categories')
 // @ApiBearerAuth()
 @ApiBadRequestResponse({ description: 'Bad Request' })
 @ApiUnauthorizedResponse({ description: 'User not authorized' })
@@ -47,16 +47,16 @@ import { InsertResult, UpdateResult, DeleteResult } from 'typeorm';
 @ApiInternalServerErrorResponse({
 	description: 'Internal Server Error'
 })
-export class CommentsEditorController extends BaseEditorController<CommentEntity> {
-	constructor(public commentservice: CommentService) {
-		super(commentservice);
+export class CategoriesEditorController extends BaseEditorController<CategoryEntity> {
+	constructor(public Categorieservice: CategoriesService) {
+		super(Categorieservice);
 	}
 
 	@Get(':id')
 	@Version('1')
-	@ApiOperation({ description: 'Get comment by id' })
+	@ApiOperation({ description: 'Get Category by id' })
 	@ApiProduces('application/json', 'application/xml')
-	@ApiOkResponse({ description: 'OK success', type: CommentEntity })
+	@ApiOkResponse({ description: 'OK success', type: CategoryEntity })
 	findByIdV1(
 		@Param(
 			'id',
@@ -65,33 +65,33 @@ export class CommentsEditorController extends BaseEditorController<CommentEntity
 			})
 		)
 		id: string
-	): Promise<CommentEntity> {
+	): Promise<CategoryEntity> {
 		return this.findDtoById(id);
 	}
 
 	@Post()
 	@Version('1')
-	@ApiOperation({ description: 'Insert new comment' })
-	@ApiBody({ type: CommentEntity })
+	@ApiOperation({ description: 'Insert new Category' })
+	@ApiBody({ type: CategoryEntity })
 	@ApiProduces('application/json', 'application/xml')
 	@ApiConsumes('application/json', 'application/xml')
 	@ApiCreatedResponse({
 		description: 'The record has been successfully created',
-		type: CommentEntity
+		type: CategoryEntity
 	})
-	newDtoV1(@Body() dto: CommentEntity): Promise<InsertResult> {
+	newDtoV1(@Body() dto: CategoryEntity): Promise<InsertResult> {
 		return this.insertNewDto(dto);
 	}
 
 	@Put(':id')
 	@Version('1')
-	@ApiOperation({ description: 'Update existing comment' })
-	@ApiBody({ type: CommentEntity })
+	@ApiOperation({ description: 'Update existing Category' })
+	@ApiBody({ type: CategoryEntity })
 	@ApiProduces('application/json', 'application/xml')
 	@ApiConsumes('application/json', 'application/xml')
 	@ApiOkResponse({
 		description: 'The record has been successfully updated',
-		type: CommentEntity
+		type: CategoryEntity
 	})
 	updateDtoV1(
 		@Param(
@@ -101,18 +101,18 @@ export class CommentsEditorController extends BaseEditorController<CommentEntity
 			})
 		)
 		id: number,
-		@Body() dto: CommentEntity
+		@Body() dto: CategoryEntity
 	): Promise<UpdateResult> {
 		return this.modifyDto(id, dto);
 	}
 
 	@Delete(':id')
 	@Version('1')
-	@ApiOperation({ description: 'Delete comment' })
+	@ApiOperation({ description: 'Delete Category' })
 	@ApiProduces('application/json', 'application/xml')
 	@ApiOkResponse({
 		description: 'The record has been successfully deleted',
-		type: CommentEntity
+		type: CategoryEntity
 	})
 	deleteDtoV1(
 		@Param(

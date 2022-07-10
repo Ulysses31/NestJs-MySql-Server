@@ -1,8 +1,9 @@
+import { BaseEntity } from './../core/models/base.entity';
 import { ProductEntity } from './product.entity';
 import { Column, Entity, OneToMany } from 'typeorm';
 
 @Entity({ name: 'categories', schema: 'northwind' })
-export class CategoryEntity {
+export class CategoryEntity extends BaseEntity {
 	@Column('int', { primary: true, name: 'CategoryID' })
 	categoryId: number;
 
