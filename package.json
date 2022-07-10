@@ -6,6 +6,10 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
+    "typeorm:cli": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli",
+		"typeorm:scaffold": "typeorm-model-generator -h localhost -d northwind -u root -e mysql --ssl false -o ./src/scaffold-entities/ && del .\\src\\scaffold-entities\\*.json && move .\\src\\scaffold-entities\\entities\\*.ts .\\src\\scaffold-entities && rimraf .\\src\\scaffold-entities\\entities",
+    "migration:gen": "npm run build && npm run typeorm:cli -- migration:generate /src/migrations -d ./src/data-source-cli.ts",
+    "schema:log": "npm run build && npm run typeorm:cli -- schema:log -d ./src/data-source-cli.ts",
     "prebuild": "rimraf dist",
     "build": "nest build",
     "format": "prettier --config ./.prettierrc --write \"src/**/*.ts\" \"test/**/*.ts\"",
@@ -41,8 +45,7 @@
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
-    "swagger-ui-express": "^4.4.0",
-    "typeorm": "^0.3.7"
+    "swagger-ui-express": "^4.4.0"
   },
   "devDependencies": {
     "@nestjs/cli": "^8.0.0",
@@ -69,6 +72,8 @@
     "ts-loader": "^9.2.3",
     "ts-node": "^10.0.0",
     "tsconfig-paths": "4.0.0",
+    "typeorm": "^0.3.7",
+    "typeorm-model-generator": "^0.4.6",
     "typescript": "^4.3.5"
   },
   "jest": {

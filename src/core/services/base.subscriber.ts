@@ -1,7 +1,20 @@
-import { EntitySubscriberInterface, EventSubscriber, InsertEvent, RecoverEvent, RemoveEvent, SoftRemoveEvent, TransactionCommitEvent, TransactionRollbackEvent, TransactionStartEvent, UpdateEvent } from 'typeorm';
+import {
+	EntitySubscriberInterface,
+	EventSubscriber,
+	InsertEvent,
+	RecoverEvent,
+	RemoveEvent,
+	SoftRemoveEvent,
+	TransactionCommitEvent,
+	TransactionRollbackEvent,
+	TransactionStartEvent,
+	UpdateEvent
+} from 'typeorm';
 
 @EventSubscriber()
-export class BaseSubscriber<TModel> implements EntitySubscriberInterface<TModel> {
+export class BaseSubscriber<TModel>
+	implements EntitySubscriberInterface<TModel>
+{
 	/**
 	 * Called after entity is loaded.
 	 */

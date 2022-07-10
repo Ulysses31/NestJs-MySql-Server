@@ -9,7 +9,7 @@ export class UsersAuthService {
 			username: 'john',
 			password: 'changeme',
 			email: 'admin@test.com',
-			isActive: true,
+			is_active: true,
 			access_token: '',
 			refresh_token: ''
 		},
@@ -18,7 +18,7 @@ export class UsersAuthService {
 			username: 'maria',
 			password: 'guess',
 			email: 'user@test.com',
-			isActive: true,
+			is_active: true,
 			access_token: '',
 			refresh_token: ''
 		}
@@ -30,8 +30,12 @@ export class UsersAuthService {
 		);
 	}
 
-	async getUserByEmail(email: string): Promise<UserEntity | undefined> {
-		return this.users.find((user: UserEntity) => user.email === email);
+	async getUserByEmail(
+		email: string
+	): Promise<UserEntity | undefined> {
+		return this.users.find(
+			(user: UserEntity) => user.email === email
+		);
 	}
 
 	async updateUsersTokens(

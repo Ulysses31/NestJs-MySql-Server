@@ -66,7 +66,9 @@ export class AuthService {
 
 	async createAccessTokenFromRefreshToken(refreshToken: string) {
 		try {
-			const decoded = this.jwtService.decode(refreshToken) as UserEntity;
+			const decoded = this.jwtService.decode(
+				refreshToken
+			) as UserEntity;
 
 			if (!decoded) {
 				throw new Error();

@@ -5,21 +5,21 @@ export class UserEntity {
 	@PrimaryGeneratedColumn()
 	id?: string;
 
-	@Column()
+	@Column({ type: 'varchar', length: 20 })
 	username?: null | string;
 
-	@Column()
+	@Column({ type: 'varchar', length: 50 })
 	password?: null | string;
 
-	@Column()
+	@Column({ type: 'varchar', length: 200 })
 	email?: null | string;
 
-	@Column({ default: true })
-	isActive: boolean;
+	@Column({ type: 'tinyint', default: true })
+	is_active: boolean;
 
-	@Column()
+	@Column({ type: 'varchar', length: 200 })
 	access_token?: null | string;
 
-	@Column()
+	@Column({ type: 'varchar', length: 200 })
 	refresh_token?: null | string;
 }

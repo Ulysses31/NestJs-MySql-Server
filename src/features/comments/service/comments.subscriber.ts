@@ -5,7 +5,7 @@ import { EventSubscriber } from 'typeorm';
 @EventSubscriber()
 export class CommentsSubscriber extends BaseSubscriber<CommentEntity> {
 	constructor() {
-		super()
+		super();
 	}
 
 	// beforeInsert(event: InsertEvent<any>) {

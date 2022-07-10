@@ -8,9 +8,7 @@ import { CommentsEditorController } from './comments-editor/comments-editor.cont
 import { CommentsSubscriber } from './service/comments.subscriber';
 
 @Module({
-	imports: [
-		TypeOrmModule.forFeature([CommentEntity])
-	],
+	imports: [TypeOrmModule.forFeature([CommentEntity])],
 	controllers: [CommentsBrowserController, CommentsEditorController],
 	providers: [CommentService, CommentsRepository, CommentsSubscriber]
 })
