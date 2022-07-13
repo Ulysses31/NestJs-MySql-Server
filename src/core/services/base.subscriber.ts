@@ -11,6 +11,9 @@ import {
 	UpdateEvent
 } from 'typeorm';
 
+/**
+ * BaseSubscriber<TModel> subscriber
+ */
 @EventSubscriber()
 export class BaseSubscriber<TModel>
 	implements EntitySubscriberInterface<TModel>

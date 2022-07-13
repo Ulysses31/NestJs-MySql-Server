@@ -6,6 +6,10 @@ import {
 	EntityTarget
 } from 'typeorm';
 
+/**
+ * BaseRepository<TModel> 
+ * @extends Repository<TModel>
+ */
 @Injectable()
 export class BaseRepository<TModel> extends Repository<TModel> {
 	constructor(

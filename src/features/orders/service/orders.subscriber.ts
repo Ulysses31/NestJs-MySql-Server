@@ -1,6 +1,6 @@
 import { EventSubscriber } from 'typeorm';
-import { OrderEntity } from 'src/models/Order.entity';
 import { BaseSubscriber } from 'src/core/services/base.subscriber';
+import { OrderEntity } from 'src/models/order.entity';
 
 /**
  * OrdersSubscriber

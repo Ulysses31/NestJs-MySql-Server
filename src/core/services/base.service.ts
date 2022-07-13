@@ -14,6 +14,10 @@ import { handleError } from 'src/shared/shared';
 // 	ContentType: 'json'
 // };
 
+/**
+ * BaseService<TModel> 
+ * @implements IBaseService<TModel>
+ */
 @Injectable()
 export class BaseService<TModel> implements IBaseService<TModel> {
 	constructor(
@@ -21,6 +25,10 @@ export class BaseService<TModel> implements IBaseService<TModel> {
 		public readonly bsRepo: Repository<TModel>
 	) {}
 
+	/**
+	 * Find all
+	 * @returns Promise<TModel[]> 
+	 */
 	async findAll(): Promise<TModel[]> {
 		try {
 			const data = await this.bsRepo.find();
@@ -30,6 +38,11 @@ export class BaseService<TModel> implements IBaseService<TModel> {
 		}
 	}
 
+	/**
+	 * Find one
+	 * @param id any
+	 * @returns Promise<TModel>
+	 */
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	async findOne(id: any): Promise<TModel> {
 		try {
@@ -40,6 +53,11 @@ export class BaseService<TModel> implements IBaseService<TModel> {
 		}
 	}
 
+	/**
+	 * Create dto
+	 * @param dto any
+	 * @returns promise<InsertResult>
+	 */
 	async create(dto: any): Promise<InsertResult> {
 		try {
 			const data = await this.bsRepo.insert(dto);
@@ -49,6 +67,12 @@ export class BaseService<TModel> implements IBaseService<TModel> {
 		}
 	}
 
+	/**
+	 * Update dto
+	 * @param id number
+	 * @param dto any
+	 * @returns Promise<UpdateResult> 
+	 */
 	async update(id: number, dto: any): Promise<UpdateResult> {
 		try {
 			const data = await this.bsRepo.update(id, dto);
@@ -58,6 +82,11 @@ export class BaseService<TModel> implements IBaseService<TModel> {
 		}
 	}
 
+	/**
+	 * Remove dto
+	 * @param id number
+	 * @returns Promise<DeleteResult>
+	 */
 	async remove(id: number): Promise<DeleteResult> {
 		try {
 			const data = await this.bsRepo.delete(id);

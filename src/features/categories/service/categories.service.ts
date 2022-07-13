@@ -2,9 +2,9 @@ import { CategoriesRepository } from './categories-repository';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { BaseService } from 'src/core/services/base.service';
-import { CategoryEntity } from 'src/models/Category.entity';
 import { Repository } from 'typeorm';
 import { handleError } from 'src/shared/shared';
+import { CategoryEntity } from 'src/models/category.entity';
 
 /**
  * CategoriesService

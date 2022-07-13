@@ -10,7 +10,6 @@ import {
 	Put,
 	Version
 } from '@nestjs/common';
-import { BaseEditorController } from 'src/core/base-Editor-controller';
 import {
 	ApiTags,
 	ApiBadRequestResponse,
@@ -29,6 +28,7 @@ import {
 import { InsertResult, UpdateResult, DeleteResult } from 'typeorm';
 import { OrderEntity } from 'src/models/order.entity';
 import { OrdersService } from '../service/orders.service';
+import { BaseEditorController } from 'src/core/base-editor-controller';
 
 /**
  * OrdersEditorController

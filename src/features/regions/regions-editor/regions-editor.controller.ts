@@ -10,7 +10,6 @@ import {
 	Put,
 	Version
 } from '@nestjs/common';
-import { BaseEditorController } from 'src/core/base-Editor-controller';
 import {
 	ApiTags,
 	ApiBadRequestResponse,
@@ -29,6 +28,7 @@ import {
 import { InsertResult, UpdateResult, DeleteResult } from 'typeorm';
 import { RegionEntity } from 'src/models/region.entity';
 import { RegionsService } from '../service/regions.service';
+import { BaseEditorController } from 'src/core/base-editor-controller';
 
 /**
  * RegionsEditorController

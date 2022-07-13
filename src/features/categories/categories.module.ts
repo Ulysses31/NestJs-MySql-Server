@@ -1,4 +1,3 @@
-import { CategoryEntity } from './../../models/Category.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Module } from '@nestjs/common';
 import { CategoriesSubscriber } from './service/categories.subscriber';
@@ -6,6 +5,7 @@ import { CategoriesBrowserController } from './categories-browser/comments-brows
 import { CategoriesEditorController } from './categories-editor/comments-editor.controller';
 import { CategoriesService } from './service/categories.service';
 import { CategoriesRepository } from './service/categories-repository';
+import { CategoryEntity } from 'src/models/category.entity';
 
 @Module({
 	imports: [TypeOrmModule.forFeature([CategoryEntity])],

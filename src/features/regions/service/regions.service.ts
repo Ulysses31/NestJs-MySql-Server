@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { BaseService } from 'src/core/services/base.service';
-import { RegionEntity } from 'src/models/Region.entity';
+import { RegionEntity } from 'src/models/region.entity';
 import { handleError } from 'src/shared/shared';
 import { Repository } from 'typeorm';
-import { RegionsRepository } from './Regions-repository';
+import { RegionsRepository } from './regions-repository';
 
 /**
  * RegionsService
