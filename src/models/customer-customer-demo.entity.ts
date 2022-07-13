@@ -1,8 +1,11 @@
-import { BaseEntity } from './../core/models/base.entity';
+import { BaseCoreEntity } from 'src/core/models/base.entity';
 import { Column, Entity } from 'typeorm';
 
+/**
+ * CustomerCustomerDemoEntity entity
+ */
 @Entity('customercustomerdemo', { schema: 'northwind' })
-export class CustomerCustomerDemoEntity extends BaseEntity {
+export class CustomerCustomerDemoEntity extends BaseCoreEntity {
 	@Column('char', {
 		primary: true,
 		name: 'CustomerID',

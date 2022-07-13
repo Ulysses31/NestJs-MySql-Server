@@ -8,10 +8,9 @@ import {
 	ParseIntPipe,
 	Post,
 	Put,
-	UseGuards,
 	Version
 } from '@nestjs/common';
-import { BaseEditorController } from 'src/core/base-Editor-controller';
+import { BaseEditorController } from 'src/core/base-editor-controller';
 import {
 	ApiTags,
 	ApiBadRequestResponse,
@@ -25,14 +24,16 @@ import {
 	ApiBody,
 	ApiConsumes,
 	ApiCreatedResponse,
-	ApiBearerAuth,
 	ApiOperation
 } from '@nestjs/swagger';
-import { JwtAuthGuard } from 'src/core/authentication/jwt-auth.guard';
 import { InsertResult, UpdateResult, DeleteResult } from 'typeorm';
 import { EmployeeEntity } from 'src/models/employee.entity';
 import { EmployeesService } from '../service/employees.service';
 
+/**
+ * EmployeesEditorController
+ * @extends BaseEditorController<EmployeeEntity>
+ */
 @Controller('Employees')
 // @UseGuards(JwtAuthGuard)
 @ApiTags('Employees')
@@ -52,6 +53,11 @@ export class EmployeesEditorController extends BaseEditorController<EmployeeEnti
 		super(employeeservice);
 	}
 
+	/**
+	 * Find by id
+	 * @param id string
+	 * @returns Promise<EmployeeEntity>
+	 */
 	@Get(':id')
 	@Version('1')
 	@ApiOperation({ description: 'Get Employee by id' })
@@ -69,6 +75,11 @@ export class EmployeesEditorController extends BaseEditorController<EmployeeEnti
 		return this.findDtoById(id);
 	}
 
+	/**
+	 * New dto
+	 * @param dto EmployeeEntity
+	 * @returns Promise<InsertResult>
+	 */
 	@Post()
 	@Version('1')
 	@ApiOperation({ description: 'Insert new Employee' })
@@ -83,6 +94,12 @@ export class EmployeesEditorController extends BaseEditorController<EmployeeEnti
 		return this.insertNewDto(dto);
 	}
 
+	/**
+	 * Update dto
+	 * @param id number
+	 * @param dto EmployeeEntity
+	 * @returns Promise<UpdateResult>
+	 */
 	@Put(':id')
 	@Version('1')
 	@ApiOperation({ description: 'Update existing Employee' })
@@ -106,6 +123,11 @@ export class EmployeesEditorController extends BaseEditorController<EmployeeEnti
 		return this.modifyDto(id, dto);
 	}
 
+	/**
+	 * Delete dto
+	 * @param id number
+	 * @returns Promise<DeleteResult>
+	 */
 	@Delete(':id')
 	@Version('1')
 	@ApiOperation({ description: 'Delete Employee' })

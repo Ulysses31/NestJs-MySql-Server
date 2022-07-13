@@ -25,7 +25,7 @@ module.exports = {
 			'endOfLine': 'auto',
 			'trailingComma': 'none',
 			'useTabs': true,
-			'tabWidth': '2'
+			'tabWidth': 2
 		}, {
 			'usePrettierrc': true
 		}]

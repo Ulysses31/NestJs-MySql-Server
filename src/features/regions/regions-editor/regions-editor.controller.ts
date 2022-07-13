@@ -8,7 +8,6 @@ import {
 	ParseIntPipe,
 	Post,
 	Put,
-	UseGuards,
 	Version
 } from '@nestjs/common';
 import { BaseEditorController } from 'src/core/base-Editor-controller';
@@ -25,14 +24,16 @@ import {
 	ApiBody,
 	ApiConsumes,
 	ApiCreatedResponse,
-	ApiBearerAuth,
 	ApiOperation
 } from '@nestjs/swagger';
-import { JwtAuthGuard } from 'src/core/authentication/jwt-auth.guard';
 import { InsertResult, UpdateResult, DeleteResult } from 'typeorm';
 import { RegionEntity } from 'src/models/region.entity';
 import { RegionsService } from '../service/regions.service';
 
+/**
+ * RegionsEditorController
+ * @extends BaseEditorController<RegionEntity>
+ */
 @Controller('Regions')
 // @UseGuards(JwtAuthGuard)
 @ApiTags('Regions')
@@ -52,6 +53,11 @@ export class RegionsEditorController extends BaseEditorController<RegionEntity> 
 		super(Regionservice);
 	}
 
+	/**
+	 * Find by id
+	 * @param id string
+	 * @returns Promise<RegionEntity>
+	 */
 	@Get(':id')
 	@Version('1')
 	@ApiOperation({ description: 'Get Region by id' })
@@ -69,6 +75,11 @@ export class RegionsEditorController extends BaseEditorController<RegionEntity> 
 		return this.findDtoById(id);
 	}
 
+	/**
+	 * New dto
+	 * @param dto RegionEntity
+	 * @returns Promise<InsertResult>
+	 */
 	@Post()
 	@Version('1')
 	@ApiOperation({ description: 'Insert new Region' })
@@ -83,6 +94,12 @@ export class RegionsEditorController extends BaseEditorController<RegionEntity> 
 		return this.insertNewDto(dto);
 	}
 
+	/**
+	 * Update dto
+	 * @param id number
+	 * @param dto RegionEntity
+	 * @returns Promise<UpdateResult>
+	 */
 	@Put(':id')
 	@Version('1')
 	@ApiOperation({ description: 'Update existing Region' })
@@ -106,6 +123,11 @@ export class RegionsEditorController extends BaseEditorController<RegionEntity> 
 		return this.modifyDto(id, dto);
 	}
 
+	/**
+	 * Delete dto
+	 * @param id number
+	 * @returns Promise<DeleteResult>
+	 */
 	@Delete(':id')
 	@Version('1')
 	@ApiOperation({ description: 'Delete Region' })

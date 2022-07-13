@@ -8,10 +8,9 @@ import {
 	ParseIntPipe,
 	Post,
 	Put,
-	UseGuards,
 	Version
 } from '@nestjs/common';
-import { BaseEditorController } from 'src/core/base-Editor-controller';
+import { BaseEditorController } from 'src/core/base-editor-controller';
 import {
 	ApiTags,
 	ApiBadRequestResponse,
@@ -25,14 +24,16 @@ import {
 	ApiBody,
 	ApiConsumes,
 	ApiCreatedResponse,
-	ApiBearerAuth,
 	ApiOperation
 } from '@nestjs/swagger';
-import { JwtAuthGuard } from 'src/core/authentication/jwt-auth.guard';
 import { InsertResult, UpdateResult, DeleteResult } from 'typeorm';
 import { CategoryEntity } from 'src/models/category.entity';
 import { CategoriesService } from '../service/categories.service';
 
+/**
+ * CategoriesEditorController
+ * @extends BaseEditorController<CategoryEntity>
+ */
 @Controller('Categories')
 // @UseGuards(JwtAuthGuard)
 @ApiTags('Categories')
@@ -52,6 +53,11 @@ export class CategoriesEditorController extends BaseEditorController<CategoryEnt
 		super(Categorieservice);
 	}
 
+	/**
+	 * Find by id
+	 * @param id string
+	 * @returns Promise<CategoryEntity>
+	 */
 	@Get(':id')
 	@Version('1')
 	@ApiOperation({ description: 'Get Category by id' })
@@ -69,6 +75,11 @@ export class CategoriesEditorController extends BaseEditorController<CategoryEnt
 		return this.findDtoById(id);
 	}
 
+	/**
+	 * New dto
+	 * @param dto CategoryEntity
+	 * @returns Promise<InsertResult>
+	 */
 	@Post()
 	@Version('1')
 	@ApiOperation({ description: 'Insert new Category' })
@@ -83,6 +94,12 @@ export class CategoriesEditorController extends BaseEditorController<CategoryEnt
 		return this.insertNewDto(dto);
 	}
 
+	/**
+	 * Update dto
+	 * @param id number
+	 * @param dto CategoryEntity
+	 * @returns Promise<UpdateResult>
+	 */
 	@Put(':id')
 	@Version('1')
 	@ApiOperation({ description: 'Update existing Category' })
@@ -106,6 +123,11 @@ export class CategoriesEditorController extends BaseEditorController<CategoryEnt
 		return this.modifyDto(id, dto);
 	}
 
+	/**
+	 * Delete dto
+	 * @param id number
+	 * @returns Promise<DeleteResult>
+	 */
 	@Delete(':id')
 	@Version('1')
 	@ApiOperation({ description: 'Delete Category' })

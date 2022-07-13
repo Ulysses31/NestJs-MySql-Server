@@ -1,4 +1,4 @@
-import { BaseEditorController } from './base-editor-controller';
+// import { BaseEditorController } from './base-editor-controller';
 
 describe('BaseEditorController', () => {
 	it('should be defined', () => {

@@ -19,4 +19,4 @@ import { EmployeesSubscriber } from './service/employees.subscriber';
 		EmployeesSubscriber
 	]
 })
-export class EmployeesModule {}
+export class EmployeeModule {}

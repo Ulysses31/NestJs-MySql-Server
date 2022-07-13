@@ -7,7 +7,7 @@ import { OrderEntity } from './models/order.entity';
 import { OrderDetailEntity } from 'src/models/order-detail.entity';
 import { EmployeeEntity } from './models/employee.entity';
 import { EmployeeTerritoryEntity } from './models/employee-territory.entity';
-import { CustomerEntity } from './models/customer.entity';
+import { CustomersEntity } from './models/customer.entity';
 import { CustomerDemographicEntity } from 'src/models/customer-demographic.entity';
 import { CustomerCustomerDemoEntity } from './models/customer-customer-demo.entity';
 import { CategoriesSubscriber } from './features/categories/service/categories.subscriber';
@@ -36,14 +36,15 @@ export const AppDataSourceCli = new DataSource({
 	password: '',
 	database: 'northwind',
 	logging: true,
-	synchronize: true,
+	synchronize: false,
 	trace: true,
+	relationLoadStrategy: 'join',
 	entities: [
 		UserEntity,
 		CustomerCustomerDemoEntity,
 		CategoryEntity,
 		CustomerDemographicEntity,
-		CustomerEntity,
+		CustomersEntity,
 		EmployeeTerritoryEntity,
 		EmployeeEntity,
 		OrderDetailEntity,

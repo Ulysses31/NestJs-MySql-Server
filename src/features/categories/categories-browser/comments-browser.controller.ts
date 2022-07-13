@@ -1,4 +1,4 @@
-import { Controller, Get, UseGuards, Version } from '@nestjs/common';
+import { Controller, Get, Version } from '@nestjs/common';
 import { BaseBrowserController } from 'src/core/base-browser-controller';
 import {
 	ApiTags,
@@ -10,13 +10,15 @@ import {
 	ApiInternalServerErrorResponse,
 	ApiProduces,
 	ApiOkResponse,
-	ApiBearerAuth,
 	ApiOperation
 } from '@nestjs/swagger';
-import { JwtAuthGuard } from 'src/core/authentication/jwt-auth.guard';
 import { CategoriesService } from '../service/categories.service';
 import { CategoryEntity } from 'src/models/category.entity';
 
+/**
+ * CategoriesBrowserController
+ * @extends BaseBrowserController<CategoryEntity>
+ */
 @Controller('Categories')
 //@UseGuards(JwtAuthGuard)
 @ApiTags('Categories')
@@ -36,6 +38,10 @@ export class CategoriesBrowserController extends BaseBrowserController<CategoryE
 		super(categoriesService);
 	}
 
+	/**
+	 * Find all
+	 * @returns Promise<CategoryEntity[]>
+	 */
 	@Get()
 	@Version('1')
 	@ApiOperation({ description: 'List of Categories' })

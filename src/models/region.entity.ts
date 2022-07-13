@@ -1,9 +1,12 @@
-import { BaseEntity } from './../core/models/base.entity';
+import { BaseCoreEntity } from 'src/core/models/base.entity';
 import { Column, Entity, OneToMany } from 'typeorm';
 import { TerritoryEntity } from './territory.entity';
 
+/**
+ * RegionEntity entity
+ */
 @Entity({ name: 'region', schema: 'northwind' })
-export class RegionEntity extends BaseEntity {
+export class RegionEntity extends BaseCoreEntity {
 	@Column('int', { primary: true, name: 'RegionID' })
 	regionId: number;
 

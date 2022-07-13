@@ -1,4 +1,3 @@
-import { BaseEntity } from './../core/models/base.entity';
 import { ProductEntity } from './product.entity';
 import { OrderEntity } from './order.entity';
 import {
@@ -8,10 +7,17 @@ import {
 	JoinColumn,
 	ManyToOne
 } from 'typeorm';
+import { BaseCoreEntity } from 'src/core/models/base.entity';
 
-@Index('FK_Order_Details_Products', ['productId'], {})
+/**
+ * OrderDetailEntity entity
+ */
+@Index('OrderID', ['orderId'], {})
+@Index('OrdersOrder_Details', ['orderId'], {})
+@Index('ProductID', ['productId'], {})
+@Index('ProductsOrder_Details', ['productId'], {})
 @Entity({ name: 'order details', schema: 'northwind' })
-export class OrderDetailEntity extends BaseEntity {
+export class OrderDetailEntity extends BaseCoreEntity {
 	@Column('int', { primary: true, name: 'OrderID' })
 	orderId: number;
 

@@ -2,6 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { RegionEntity } from 'src/models/region.entity';
 import { EntityManager, Repository } from 'typeorm';
 
+/**
+ * RegionsRepository
+ * @extends Repository<RegionEntity>
+ */
 @Injectable()
 export class RegionsRepository<
 	RegionEntity

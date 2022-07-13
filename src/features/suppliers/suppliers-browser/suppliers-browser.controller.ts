@@ -1,4 +1,4 @@
-import { Controller, Get, UseGuards, Version } from '@nestjs/common';
+import { Controller, Get, Version } from '@nestjs/common';
 import { BaseBrowserController } from 'src/core/base-browser-controller';
 import {
 	ApiTags,
@@ -10,13 +10,15 @@ import {
 	ApiInternalServerErrorResponse,
 	ApiProduces,
 	ApiOkResponse,
-	ApiBearerAuth,
 	ApiOperation
 } from '@nestjs/swagger';
-import { JwtAuthGuard } from 'src/core/authentication/jwt-auth.guard';
 import { SuppliersService } from '../service/suppliers.service';
 import { SupplierEntity } from 'src/models/supplier.entity';
 
+/**
+ * SuppliersBrowserController
+ * @extends BaseBrowserController<SupplierEntity>
+ */
 @Controller('Suppliers')
 //@UseGuards(JwtAuthGuard)
 @ApiTags('Suppliers')
@@ -36,6 +38,10 @@ export class SuppliersBrowserController extends BaseBrowserController<SupplierEn
 		super(suppliersService);
 	}
 
+	/**
+	 * Find all
+	 * @returns Promise<SupplierEntity[]>
+	 */
 	@Get()
 	@Version('1')
 	@ApiOperation({ description: 'List of Suppliers' })

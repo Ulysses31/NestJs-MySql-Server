@@ -1,9 +1,12 @@
-import { BaseEntity } from './../core/models/base.entity';
-import { CustomerEntity } from './customer.entity';
 import { Column, Entity, JoinTable, ManyToMany } from 'typeorm';
+import { BaseCoreEntity } from 'src/core/models/base.entity';
+import { CustomersEntity } from './customer.entity';
 
+/**
+ * CustomerDemographicEntity entity
+ */
 @Entity('customerdemographics', { schema: 'northwind' })
-export class CustomerDemographicEntity extends BaseEntity {
+export class CustomerDemographicEntity extends BaseCoreEntity {
 	@Column('char', {
 		primary: true,
 		name: 'CustomerTypeID',
@@ -15,7 +18,7 @@ export class CustomerDemographicEntity extends BaseEntity {
 	customerDesc: string | null;
 
 	@ManyToMany(
-		() => CustomerEntity,
+		() => CustomersEntity,
 		(customers) => customers.customerdemographics
 	)
 	@JoinTable({
@@ -31,5 +34,5 @@ export class CustomerDemographicEntity extends BaseEntity {
 		],
 		schema: 'northwind'
 	})
-	customers: CustomerEntity[];
+	customers: CustomersEntity[];
 }

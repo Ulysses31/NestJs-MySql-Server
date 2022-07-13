@@ -32,6 +32,14 @@
 $ npm install
 ```
 
+## npm Installation
+```bash
+$ npm install @nestjs/axios @nestjs/common @nestjs/config @nestjs/core @nestjs/jwt @nestjs/mapped-types @nestjs/passport @nestjs/platform-express @nestjs/swagger @nestjs/typeorm axios bcrypt cookie-parser mysql2 passport passport-jwt passport-local reflect-metadata rimraf rxjs swagger-ui-express
+```
+```
+$ npm install -D @nestjs/cli @nestjs/schematics @nestjs/testing @types/bcrypt @types/cookie-parser @types/express @types/jest @types/node @types/passport-jwt @types/passport-local @types/supertest @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint eslint-config-prettier eslint-plugin-prettier jest prettier source-map-support supertest ts-jest ts-loader ts-node tsconfig-paths typeorm typeorm-model-generator typescript
+```
+
 ## Running the app
 
 ```bash

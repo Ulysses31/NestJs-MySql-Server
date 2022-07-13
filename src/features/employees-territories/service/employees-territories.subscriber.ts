@@ -1,7 +1,11 @@
-import { BaseSubscriber } from './../../../core/services/base.subscriber';
 import { EventSubscriber } from 'typeorm';
 import { EmployeeTerritoryEntity } from 'src/models/employee-territory.entity';
+import { BaseSubscriber } from 'src/core/services/base.subscriber';
 
+/**
+ * EmployeesTerritoriesSubscriber
+ * @extends BaseSubscriber<EmployeeTerritoryEntity>
+ */
 @EventSubscriber()
 export class EmployeesTerritoriesSubscriber extends BaseSubscriber<EmployeeTerritoryEntity> {
 	constructor() {

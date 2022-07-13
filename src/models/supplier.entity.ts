@@ -1,9 +1,14 @@
-import { BaseEntity } from './../core/models/base.entity';
 import { ProductEntity } from './product.entity';
-import { Column, Entity, OneToMany } from 'typeorm';
+import { Column, Entity, Index, OneToMany } from 'typeorm';
+import { BaseCoreEntity } from 'src/core/models/base.entity';
 
+/**
+ * SupplierEntity entity
+ */
+@Index('CompanyName', ['companyName'], {})
+@Index('PostalCode', ['postalCode'], {})
 @Entity({ name: 'suppliers', schema: 'northwind' })
-export class SupplierEntity extends BaseEntity {
+export class SupplierEntity extends BaseCoreEntity {
 	@Column('int', { primary: true, name: 'SupplierID' })
 	supplierId: number;
 

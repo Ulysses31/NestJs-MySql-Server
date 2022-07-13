@@ -4,7 +4,12 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { BaseService } from 'src/core/services/base.service';
 import { CategoryEntity } from 'src/models/Category.entity';
 import { Repository } from 'typeorm';
+import { handleError } from 'src/shared/shared';
 
+/**
+ * CategoriesService
+ * @extends BaseService<CategoryEntity>
+ */
 @Injectable()
 export class CategoriesService extends BaseService<CategoryEntity> {
 	constructor(
@@ -12,5 +17,19 @@ export class CategoriesService extends BaseService<CategoryEntity> {
 		public readonly bsRepo: Repository<CategoryEntity>
 	) {
 		super(bsRepo);
+	}
+
+	/**
+	 * Find one
+	 * @param id any
+	 * @returns Promise<CategoryEntity>
+	 */
+	async findOne(id: any): Promise<CategoryEntity> {
+		try {
+			const data = await this.bsRepo.findOneBy({ categoryId: id });
+			return await Promise.resolve(data);
+		} catch (err) {
+			throw handleError(err);
+		}
 	}
 }

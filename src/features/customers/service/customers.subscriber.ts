@@ -1,9 +1,13 @@
-import { BaseSubscriber } from './../../../core/services/base.subscriber';
 import { EventSubscriber } from 'typeorm';
-import { CustomerEntity } from 'src/models/customer.entity';
+import { CustomersEntity } from 'src/models/customer.entity';
+import { BaseSubscriber } from 'src/core/services/base.subscriber';
 
+/**
+ * CustomersSubscriber
+ * @extends BaseSubscriber<CustomersEntity>
+ */
 @EventSubscriber()
-export class CustomersSubscriber extends BaseSubscriber<CustomerEntity> {
+export class CustomersSubscriber extends BaseSubscriber<CustomersEntity> {
 	constructor() {
 		super();
 	}

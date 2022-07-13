@@ -1,4 +1,4 @@
-import { Controller, Get, UseGuards, Version } from '@nestjs/common';
+import { Controller, Get, Version } from '@nestjs/common';
 import { BaseBrowserController } from 'src/core/base-browser-controller';
 import {
 	ApiTags,
@@ -10,13 +10,15 @@ import {
 	ApiInternalServerErrorResponse,
 	ApiProduces,
 	ApiOkResponse,
-	ApiBearerAuth,
 	ApiOperation
 } from '@nestjs/swagger';
-import { JwtAuthGuard } from 'src/core/authentication/jwt-auth.guard';
 import { OrderDetailEntity } from 'src/models/order-detail.entity';
 import { OrderDetailsService } from '../service/order-details.service';
 
+/**
+ * OrderDetailsBrowserController
+ * @extends BaseBrowserController<OrderDetailEntity>
+ */
 @Controller('OrderDetails')
 //@UseGuards(JwtAuthGuard)
 @ApiTags('OrderDetails')
@@ -36,6 +38,10 @@ export class OrderDetailsBrowserController extends BaseBrowserController<OrderDe
 		super(orderDetailsService);
 	}
 
+	/**
+	 * Find all
+	 * @returns Promise<OrderDetailEntity[]>
+	 */
 	@Get()
 	@Version('1')
 	@ApiOperation({ description: 'List of OrderDetails' })

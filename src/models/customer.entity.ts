@@ -1,11 +1,24 @@
-import { BaseEntity } from './../core/models/base.entity';
+import { BaseCoreEntity } from 'src/core/models/base.entity';
+import {
+	Entity,
+	Column,
+	OneToMany,
+	ManyToMany,
+	Index
+} from 'typeorm';
 import { CustomerDemographicEntity } from './customer-demographic.entity';
-import { Column, Entity, ManyToMany, OneToMany } from 'typeorm';
 import { OrderEntity } from './order.entity';
 
+/**
+ * CustomersEntity entity
+ */
+@Index('City', ['city'], {})
+@Index('CompanyName', ['companyName'], {})
+@Index('PostalCode', ['postalCode'], {})
+@Index('Region', ['region'], {})
 @Entity({ name: 'customers', schema: 'northwind' })
-export class CustomerEntity extends BaseEntity {
-	@Column('char', { primary: true, name: 'CustomerID', length: 5 })
+export class CustomersEntity extends BaseCoreEntity {
+	@Column('varchar', { primary: true, name: 'CustomerID', length: 5 })
 	customerId: string;
 
 	@Column('varchar', { name: 'CompanyName', length: 40 })

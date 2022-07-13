@@ -1,4 +1,4 @@
-import { CustomerEntity } from './../../models/customer.entity';
+import { CustomersEntity } from './../../models/customer.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Module } from '@nestjs/common';
 import { CustomerDemographicEntity } from 'src/models/customer-demographic.entity';
@@ -12,7 +12,7 @@ import { CustomerDemographicsSubscriber } from './service/customer-demographic.s
 	imports: [
 		TypeOrmModule.forFeature([
 			CustomerDemographicEntity,
-			CustomerEntity
+			CustomersEntity
 		])
 	],
 	controllers: [

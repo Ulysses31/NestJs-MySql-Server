@@ -1,4 +1,5 @@
-import { Controller, Get, UseGuards, Version } from '@nestjs/common';
+import { ProductsService } from './../service/products.service';
+import { Controller, Get, Version } from '@nestjs/common';
 import { BaseBrowserController } from 'src/core/base-browser-controller';
 import {
 	ApiTags,
@@ -10,13 +11,14 @@ import {
 	ApiInternalServerErrorResponse,
 	ApiProduces,
 	ApiOkResponse,
-	ApiBearerAuth,
 	ApiOperation
 } from '@nestjs/swagger';
-import { JwtAuthGuard } from 'src/core/authentication/jwt-auth.guard';
-import { ProductsService } from '../service/Products.service';
 import { ProductEntity } from 'src/models/product.entity';
 
+/**
+ * ProductsBrowserController
+ * @extends BaseBrowserController<ProductEntity>
+ */
 @Controller('Products')
 //@UseGuards(JwtAuthGuard)
 @ApiTags('Products')
@@ -32,10 +34,14 @@ import { ProductEntity } from 'src/models/product.entity';
 	description: 'Internal Server Error'
 })
 export class ProductsBrowserController extends BaseBrowserController<ProductEntity> {
-	constructor(public ProductsService: ProductsService) {
-		super(ProductsService);
+	constructor(public productsService: ProductsService) {
+		super(productsService);
 	}
 
+	/**
+	 * Find all
+	 * @returns Promise<ProductEntity[]>
+	 */
 	@Get()
 	@Version('1')
 	@ApiOperation({ description: 'List of Products' })

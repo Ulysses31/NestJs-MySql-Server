@@ -8,7 +8,6 @@ import {
 	ParseIntPipe,
 	Post,
 	Put,
-	UseGuards,
 	Version
 } from '@nestjs/common';
 import { BaseEditorController } from 'src/core/base-Editor-controller';
@@ -25,14 +24,16 @@ import {
 	ApiBody,
 	ApiConsumes,
 	ApiCreatedResponse,
-	ApiBearerAuth,
 	ApiOperation
 } from '@nestjs/swagger';
-import { JwtAuthGuard } from 'src/core/authentication/jwt-auth.guard';
 import { InsertResult, UpdateResult, DeleteResult } from 'typeorm';
 import { ProductEntity } from 'src/models/product.entity';
-import { ProductsService } from '../service/Products.service';
+import { ProductsService } from '../service/products.service';
 
+/**
+ * ProductsEditorController
+ * @extends BaseEditorController<ProductEntity>
+ */
 @Controller('Products')
 // @UseGuards(JwtAuthGuard)
 @ApiTags('Products')
@@ -48,10 +49,15 @@ import { ProductsService } from '../service/Products.service';
 	description: 'Internal Server Error'
 })
 export class ProductsEditorController extends BaseEditorController<ProductEntity> {
-	constructor(public Productservice: ProductsService) {
-		super(Productservice);
+	constructor(public productservice: ProductsService) {
+		super(productservice);
 	}
 
+	/**
+	 * Find by id
+	 * @param id string
+	 * @returns Promise<ProductEntity>
+	 */
 	@Get(':id')
 	@Version('1')
 	@ApiOperation({ description: 'Get Product by id' })
@@ -69,6 +75,11 @@ export class ProductsEditorController extends BaseEditorController<ProductEntity
 		return this.findDtoById(id);
 	}
 
+	/**
+	 * New dto
+	 * @param dto ProductEntity
+	 * @returns Promise<InsertResult>
+	 */
 	@Post()
 	@Version('1')
 	@ApiOperation({ description: 'Insert new Product' })
@@ -83,6 +94,12 @@ export class ProductsEditorController extends BaseEditorController<ProductEntity
 		return this.insertNewDto(dto);
 	}
 
+	/**
+	 * Update dto
+	 * @param id number
+	 * @param dto ProductEntity
+	 * @returns
+	 */
 	@Put(':id')
 	@Version('1')
 	@ApiOperation({ description: 'Update existing Product' })
@@ -106,6 +123,11 @@ export class ProductsEditorController extends BaseEditorController<ProductEntity
 		return this.modifyDto(id, dto);
 	}
 
+	/**
+	 * Delete dto
+	 * @param id  number
+	 * @returns Promise<DeleteResult>
+	 */
 	@Delete(':id')
 	@Version('1')
 	@ApiOperation({ description: 'Delete Product' })

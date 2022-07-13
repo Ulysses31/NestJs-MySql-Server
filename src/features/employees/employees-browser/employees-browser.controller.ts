@@ -1,5 +1,5 @@
 import { EmployeesService } from './../service/employees.service';
-import { Controller, Get, UseGuards, Version } from '@nestjs/common';
+import { Controller, Get, Version } from '@nestjs/common';
 import { BaseBrowserController } from 'src/core/base-browser-controller';
 import {
 	ApiTags,
@@ -11,12 +11,14 @@ import {
 	ApiInternalServerErrorResponse,
 	ApiProduces,
 	ApiOkResponse,
-	ApiBearerAuth,
 	ApiOperation
 } from '@nestjs/swagger';
-import { JwtAuthGuard } from 'src/core/authentication/jwt-auth.guard';
 import { EmployeeEntity } from 'src/models/employee.entity';
 
+/**
+ * EmployeesBrowserController
+ * @extends BaseBrowserController<EmployeeEntity>
+ */
 @Controller('Employees')
 //@UseGuards(JwtAuthGuard)
 @ApiTags('Employees')
@@ -36,6 +38,10 @@ export class EmployeesBrowserController extends BaseBrowserController<EmployeeEn
 		super(employeesService);
 	}
 
+	/**
+	 * Find all
+	 * @returns Promise<EmployeeEntity[]>
+	 */
 	@Get()
 	@Version('1')
 	@ApiOperation({ description: 'List of Employees' })

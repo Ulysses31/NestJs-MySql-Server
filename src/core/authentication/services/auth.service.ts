@@ -10,6 +10,9 @@ import { UsersAuthService } from '../users-auth/services/users-auth.service';
 import { JwtService } from '@nestjs/jwt';
 import { UserEntity } from 'src/core/models/user.entity';
 
+/**
+ * AuthService
+ */
 @Injectable()
 export class AuthService {
 	constructor(
@@ -18,30 +21,41 @@ export class AuthService {
 		private jwtService: JwtService
 	) {}
 
+	/**
+	 * User vaidation
+	 * @param username string
+	 * @param pass string
+	 * @returns Promise<any>
+	 */
 	async validateUser(username: string, pass: string): Promise<any> {
 		const user = await this.usersService.findOne(username);
 		if (user && user.password === pass) {
-			const { password, ...result } = user;
+			const { ...result } = user;
 			return result;
 		}
 		return null;
 	}
 
+	/**
+	 *
+	 * @param user string
+	 * @returns {}
+	 */
 	async login(user: UserEntity) {
 		const payload = { username: user.username, sub: user.id };
 
-		var accToken: string = this.jwtService.sign(payload, {
+		const accToken: string = this.jwtService.sign(payload, {
 			secret: this.confService.get('JWT_TOKEN_SECRET'),
 			expiresIn: this.confService.get('JWT_TOKEN_EXP_H')
 		});
 
-		var refrToken: string = this.jwtService.sign(payload, {
+		const refrToken: string = this.jwtService.sign(payload, {
 			secret: this.confService.get('JWT_REFRESH_TOKEN_SECRET'),
 			expiresIn: this.confService.get('JWT_REFRESH_TOKEN_EXP_H')
 		});
 
 		//var usr = this.usersService.findOne(payload.username);
-		var usr = await this.usersService.updateUsersTokens(
+		const usr = await this.usersService.updateUsersTokens(
 			payload.sub,
 			accToken,
 			refrToken
@@ -64,6 +78,11 @@ export class AuthService {
 		};
 	}
 
+	/**
+	 * CreateAccessTokenFromRefreshToken
+	 * @param refreshToken string
+	 * @returns
+	 */
 	async createAccessTokenFromRefreshToken(refreshToken: string) {
 		try {
 			const decoded = this.jwtService.decode(
@@ -103,8 +122,8 @@ export class AuthService {
 		}
 	}
 
-	async saveRefreshToken(refreshToken: string, userId: number) {
-		// const currentHashedRefreshToken = await bcrypt.hash(refreshToken, 10);
-		// save to db
-	}
+	// async saveRefreshToken(refreshToken: string, userId: number) {
+	// const currentHashedRefreshToken = await bcrypt.hash(refreshToken, 10);
+	// save to db
+	// }
 }

@@ -1,5 +1,5 @@
 import { TerritoriesService } from './../service/territories.service';
-import { Controller, Get, UseGuards, Version } from '@nestjs/common';
+import { Controller, Get, Version } from '@nestjs/common';
 import { BaseBrowserController } from 'src/core/base-browser-controller';
 import {
 	ApiTags,
@@ -11,12 +11,14 @@ import {
 	ApiInternalServerErrorResponse,
 	ApiProduces,
 	ApiOkResponse,
-	ApiBearerAuth,
 	ApiOperation
 } from '@nestjs/swagger';
-import { JwtAuthGuard } from 'src/core/authentication/jwt-auth.guard';
 import { TerritoryEntity } from 'src/models/territory.entity';
 
+/**
+ * TerritoriesBrowserController
+ * @extends BaseBrowserController<TerritoryEntity>
+ */
 @Controller('Territories')
 //@UseGuards(JwtAuthGuard)
 @ApiTags('Territories')
@@ -32,10 +34,14 @@ import { TerritoryEntity } from 'src/models/territory.entity';
 	description: 'Internal Server Error'
 })
 export class TerritoriesBrowserController extends BaseBrowserController<TerritoryEntity> {
-	constructor(public TerritoriesService: TerritoriesService) {
-		super(TerritoriesService);
+	constructor(public territoriesService: TerritoriesService) {
+		super(territoriesService);
 	}
 
+	/**
+	 * Find all
+	 * @returns Promise<TerritoryEntity[]>
+	 */
 	@Get()
 	@Version('1')
 	@ApiOperation({ description: 'List of Territories' })

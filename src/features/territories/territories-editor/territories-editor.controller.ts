@@ -8,7 +8,6 @@ import {
 	ParseIntPipe,
 	Post,
 	Put,
-	UseGuards,
 	Version
 } from '@nestjs/common';
 import { BaseEditorController } from 'src/core/base-Editor-controller';
@@ -25,14 +24,16 @@ import {
 	ApiBody,
 	ApiConsumes,
 	ApiCreatedResponse,
-	ApiBearerAuth,
 	ApiOperation
 } from '@nestjs/swagger';
-import { JwtAuthGuard } from 'src/core/authentication/jwt-auth.guard';
 import { InsertResult, UpdateResult, DeleteResult } from 'typeorm';
 import { TerritoryEntity } from 'src/models/territory.entity';
 import { TerritoriesService } from '../service/territories.service';
 
+/**
+ * TerritoriesEditorController
+ * @extends BaseEditorController<TerritoryEntity>
+ */
 @Controller('Territories')
 // @UseGuards(JwtAuthGuard)
 @ApiTags('Territories')
@@ -52,6 +53,11 @@ export class TerritoriesEditorController extends BaseEditorController<TerritoryE
 		super(Territorieservice);
 	}
 
+	/**
+	 * Find by id
+	 * @param id string
+	 * @returns Promise<TerritoryEntity>
+	 */
 	@Get(':id')
 	@Version('1')
 	@ApiOperation({ description: 'Get Territory by id' })
@@ -69,6 +75,11 @@ export class TerritoriesEditorController extends BaseEditorController<TerritoryE
 		return this.findDtoById(id);
 	}
 
+	/**
+	 * New dto
+	 * @param dto TerritoryEntity
+	 * @returns Promise<InsertResult>
+	 */
 	@Post()
 	@Version('1')
 	@ApiOperation({ description: 'Insert new Territory' })
@@ -83,6 +94,12 @@ export class TerritoriesEditorController extends BaseEditorController<TerritoryE
 		return this.insertNewDto(dto);
 	}
 
+	/**
+	 * Update dto
+	 * @param id numbner
+	 * @param dto TerritoryEntity
+	 * @returns Promise<UpdateResult>
+	 */
 	@Put(':id')
 	@Version('1')
 	@ApiOperation({ description: 'Update existing Territory' })
@@ -106,6 +123,11 @@ export class TerritoriesEditorController extends BaseEditorController<TerritoryE
 		return this.modifyDto(id, dto);
 	}
 
+	/**
+	 * Delete dto
+	 * @param id number
+	 * @returns Promise<DeleteResult>
+	 */
 	@Delete(':id')
 	@Version('1')
 	@ApiOperation({ description: 'Delete Territory' })

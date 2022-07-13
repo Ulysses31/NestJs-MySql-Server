@@ -8,7 +8,6 @@ import {
 	ParseIntPipe,
 	Post,
 	Put,
-	UseGuards,
 	Version
 } from '@nestjs/common';
 import { BaseEditorController } from 'src/core/base-Editor-controller';
@@ -25,14 +24,16 @@ import {
 	ApiBody,
 	ApiConsumes,
 	ApiCreatedResponse,
-	ApiBearerAuth,
 	ApiOperation
 } from '@nestjs/swagger';
-import { JwtAuthGuard } from 'src/core/authentication/jwt-auth.guard';
 import { InsertResult, UpdateResult, DeleteResult } from 'typeorm';
 import { OrderDetailEntity } from 'src/models/order-detail.entity';
 import { OrderDetailsService } from '../service/order-details.service';
 
+/**
+ * OrderDetailsEditorController
+ * @extends BaseEditorController<OrderDetailEntity>
+ */
 @Controller('OrderDetails')
 // @UseGuards(JwtAuthGuard)
 @ApiTags('OrderDetails')
@@ -48,10 +49,15 @@ import { OrderDetailsService } from '../service/order-details.service';
 	description: 'Internal Server Error'
 })
 export class OrderDetailsEditorController extends BaseEditorController<OrderDetailEntity> {
-	constructor(public OrderDetailservice: OrderDetailsService) {
-		super(OrderDetailservice);
+	constructor(public orderDetailservice: OrderDetailsService) {
+		super(orderDetailservice);
 	}
 
+	/**
+	 * Find by id
+	 * @param id string
+	 * @returns Promise<OrderDetailEntity>
+	 */
 	@Get(':id')
 	@Version('1')
 	@ApiOperation({ description: 'Get OrderDetail by id' })
@@ -72,6 +78,11 @@ export class OrderDetailsEditorController extends BaseEditorController<OrderDeta
 		return this.findDtoById(id);
 	}
 
+	/**
+	 * New dto
+	 * @param dto OrderDetailEntity
+	 * @returns Promise<InsertResult>
+	 */
 	@Post()
 	@Version('1')
 	@ApiOperation({ description: 'Insert new OrderDetail' })
@@ -86,6 +97,12 @@ export class OrderDetailsEditorController extends BaseEditorController<OrderDeta
 		return this.insertNewDto(dto);
 	}
 
+	/**
+	 * Update dto
+	 * @param id number
+	 * @param dto OrderDetailEntity
+	 * @returns Promise<UpdateResult>
+	 */
 	@Put(':id')
 	@Version('1')
 	@ApiOperation({ description: 'Update existing OrderDetail' })
@@ -109,6 +126,11 @@ export class OrderDetailsEditorController extends BaseEditorController<OrderDeta
 		return this.modifyDto(id, dto);
 	}
 
+	/**
+	 * Delete dto
+	 * @param id number
+	 * @returns Promise<DeleteResult>
+	 */
 	@Delete(':id')
 	@Version('1')
 	@ApiOperation({ description: 'Delete OrderDetail' })

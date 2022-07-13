@@ -1,4 +1,3 @@
-import { BaseEntity } from './../core/models/base.entity';
 import { OrderEntity } from './order.entity';
 import { TerritoryEntity } from './territory.entity';
 import {
@@ -11,10 +10,16 @@ import {
 	ManyToOne,
 	OneToMany
 } from 'typeorm';
+import { BaseCoreEntity } from 'src/core/models/base.entity';
 
-@Index('FK_Employees_Employees', ['reportsTo'], {})
+/**
+ * EmployeeEntity entity
+ */
+@Index('LastName', ['lastName'], {})
+@Index('PostalCode', ['postalCode'], {})
+@Index('ReportsTo', ['reportsTo'], {})
 @Entity({ name: 'employees', schema: 'northwind' })
-export class EmployeeEntity extends BaseEntity {
+export class EmployeeEntity extends BaseCoreEntity {
 	@Column('int', { primary: true, name: 'EmployeeID' })
 	employeeId: number;
 
@@ -69,8 +74,8 @@ export class EmployeeEntity extends BaseEntity {
 	@Column('varchar', { name: 'Extension', nullable: true, length: 4 })
 	extension: string | null;
 
-	@Column('longblob', { name: 'Photo', nullable: true })
-	photo: Buffer | null;
+	// @Column('longblob', { name: 'Photo', nullable: true })
+	// photo: Buffer | null;
 
 	@Column('longtext', { name: 'Notes', nullable: true })
 	notes: string | null;

@@ -8,7 +8,6 @@ import {
 	ParseIntPipe,
 	Post,
 	Put,
-	UseGuards,
 	Version
 } from '@nestjs/common';
 import { BaseEditorController } from 'src/core/base-Editor-controller';
@@ -25,14 +24,16 @@ import {
 	ApiBody,
 	ApiConsumes,
 	ApiCreatedResponse,
-	ApiBearerAuth,
 	ApiOperation
 } from '@nestjs/swagger';
-import { JwtAuthGuard } from 'src/core/authentication/jwt-auth.guard';
 import { InsertResult, UpdateResult, DeleteResult } from 'typeorm';
 import { SupplierEntity } from 'src/models/supplier.entity';
 import { SuppliersService } from '../service/suppliers.service';
 
+/**
+ * SuppliersEditorController
+ * @extends BaseEditorController<SupplierEntity>
+ */
 @Controller('Suppliers')
 // @UseGuards(JwtAuthGuard)
 @ApiTags('Suppliers')
@@ -52,6 +53,11 @@ export class SuppliersEditorController extends BaseEditorController<SupplierEnti
 		super(Supplierservice);
 	}
 
+	/**
+	 * Find by id
+	 * @param id string
+	 * @returns Promise<SupplierEntity>
+	 */
 	@Get(':id')
 	@Version('1')
 	@ApiOperation({ description: 'Get Supplier by id' })
@@ -69,6 +75,11 @@ export class SuppliersEditorController extends BaseEditorController<SupplierEnti
 		return this.findDtoById(id);
 	}
 
+	/**
+	 * New dto
+	 * @param dto SupplierEntity
+	 * @returns Promise<InsertResult>
+	 */
 	@Post()
 	@Version('1')
 	@ApiOperation({ description: 'Insert new Supplier' })
@@ -83,6 +94,12 @@ export class SuppliersEditorController extends BaseEditorController<SupplierEnti
 		return this.insertNewDto(dto);
 	}
 
+	/**
+	 * Update dto
+	 * @param id number
+	 * @param dto SupplierEntity
+	 * @returns Promise<UpdateResult>
+	 */
 	@Put(':id')
 	@Version('1')
 	@ApiOperation({ description: 'Update existing Supplier' })
@@ -106,6 +123,11 @@ export class SuppliersEditorController extends BaseEditorController<SupplierEnti
 		return this.modifyDto(id, dto);
 	}
 
+	/**
+	 * Delete dto
+	 * @param id number
+	 * @returns Promise<DeleteResult>
+	 */
 	@Delete(':id')
 	@Version('1')
 	@ApiOperation({ description: 'Delete Supplier' })

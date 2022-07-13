@@ -1,7 +1,3 @@
-import { EmployeesRepository } from './features/employees/service/employees-repository';
-import { EmployeesService } from './features/employees/service/employees.service';
-import { CustomersRepository } from './features/customers/service/customers-repository';
-import { CustomersService } from './features/customers/service/customers.service';
 import { CustomerCustomerDemosSubscriber } from './features/customer-customer-demo/service/customer-customer-demo.subscriber';
 import { CustomerCustomerDemoModule } from './features/customer-customer-demo/customer-customer-demo.module';
 import { EmployeesTerritoriesSubscriber } from './features/employees-territories/service/employees-territories.subscriber';
@@ -16,7 +12,7 @@ import { ShipperModule } from './features/shippers/shippers.module';
 import { RegionsSubscriber } from './features/regions/service/regions.subscriber';
 import { RegionModule } from './features/regions/regions.module';
 import { EmployeesSubscriber } from './features/employees/service/employees.subscriber';
-import { EmployeesModule } from './features/employees/employees.module';
+import { EmployeeModule } from './features/employees/employees.module';
 import { CustomersSubscriber } from './features/customers/service/customers.subscriber';
 import { OrdersSubscriber } from './features/orders/service/orders.subscriber';
 import { OrderModule } from './features/orders/orders.module';
@@ -33,11 +29,11 @@ import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './core/authentication/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserEntity } from './core/models/user.entity';
-import { BaseSubscriber } from './core/services/base.subscriber';
 import { CategoryModule } from './features/categories/categories.module';
 import { OrderDetailModule } from './features/order-details/order-details.module';
 import { CustomerModule } from './features/customers/customers.module';
 import { CustomerDemographicModule } from './features/customer-demographic/customer-demographic.module';
+import { BaseSubscriber } from './core/services/base.subscriber';
 
 @Module({
 	imports: [
@@ -71,13 +67,14 @@ import { CustomerDemographicModule } from './features/customer-demographic/custo
 			],
 			autoLoadEntities: true,
 			debug: process.env.DATABASE_DEBUG === 'true',
-			logger: 'debug',
+			logging: 'all',
+			logger: 'advanced-console',
 			synchronize: process.env.DATABASE_SYNC === 'true' // only in develepment mode is true
 		}),
 		AuthModule,
 		CategoryModule,
 		ProductModule,
-		EmployeesModule,
+		EmployeeModule,
 		OrderModule,
 		OrderDetailModule,
 		CustomerModule,
@@ -90,10 +87,27 @@ import { CustomerDemographicModule } from './features/customer-demographic/custo
 		CustomerCustomerDemoModule
 	],
 	controllers: [AppController],
-	providers: [BaseService, BaseRepository, BaseSubscriber]
+	providers: [Object, BaseService, BaseRepository, BaseSubscriber]
 })
 export class AppModule {
 	configure(consumer: MiddlewareConsumer) {
-		consumer.apply(DbMiddleware).forRoutes('categories');
+		consumer
+			.apply(DbMiddleware)
+			.forRoutes(
+				AuthModule,
+				CategoryModule,
+				ProductModule,
+				EmployeeModule,
+				OrderModule,
+				OrderDetailModule,
+				CustomerModule,
+				RegionModule,
+				ShipperModule,
+				SupplierModule,
+				TerritoryModule,
+				CustomerDemographicModule,
+				EmployeeTerritoryModule,
+				CustomerCustomerDemoModule
+			);
 	}
 }

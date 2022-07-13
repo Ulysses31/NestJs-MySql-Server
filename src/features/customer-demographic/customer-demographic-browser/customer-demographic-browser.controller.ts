@@ -1,4 +1,4 @@
-import { Controller, Get, UseGuards, Version } from '@nestjs/common';
+import { Controller, Get, Version } from '@nestjs/common';
 import { BaseBrowserController } from 'src/core/base-browser-controller';
 import {
 	ApiTags,
@@ -10,13 +10,15 @@ import {
 	ApiInternalServerErrorResponse,
 	ApiProduces,
 	ApiOkResponse,
-	ApiBearerAuth,
 	ApiOperation
 } from '@nestjs/swagger';
-import { JwtAuthGuard } from 'src/core/authentication/jwt-auth.guard';
 import { CustomerDemographicEntity } from 'src/models/customer-demographic.entity';
 import { CustomerDemographicsService } from '../service/customer-demographic.service';
 
+/**
+ * CustomerDemographicsBrowserController
+ * @extends BaseBrowserController<CustomerDemographicEntity>
+ */
 @Controller('CustomerDemographics')
 //@UseGuards(JwtAuthGuard)
 @ApiTags('CustomerDemographics')
@@ -38,6 +40,10 @@ export class CustomerDemographicsBrowserController extends BaseBrowserController
 		super(customerDemographicsService);
 	}
 
+	/**
+	 * Find all
+	 * @returns Promise<CustomerDemographicEntity[]>
+	 */
 	@Get()
 	@Version('1')
 	@ApiOperation({ description: 'List of CustomerDemographics' })

@@ -1,12 +1,20 @@
+import { CustomersEntity } from 'src/models/customer.entity';
 import { Injectable } from '@nestjs/common';
-import { CustomerEntity } from 'src/models/Customer.entity';
-import { EntityManager, Repository } from 'typeorm';
+import { BaseRepository } from 'src/core/services/base-repository';
+import { EntityManager, QueryRunner } from 'typeorm';
 
+/**
+ * CustomersRepository
+ * @extends BaseRepository<CustomersEntity>
+ */
 @Injectable()
 export class CustomersRepository<
-	CustomerEntity
-> extends Repository<CustomerEntity> {
-	constructor(public manager: EntityManager) {
-		super(CustomerEntity, manager);
+	CustomersEntity
+> extends BaseRepository<CustomersEntity> {
+	constructor(
+		public manager: EntityManager,
+		public qRunner: QueryRunner
+	) {
+		super(CustomersEntity, manager, qRunner);
 	}
 }

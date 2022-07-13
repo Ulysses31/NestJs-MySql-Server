@@ -1,7 +1,7 @@
 import { TimeInterceptor } from './core/time.interceptor';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { VersioningType, Logger } from '@nestjs/common';
+import { VersioningType } from '@nestjs/common';
 import * as cookieParser from 'cookie-parser';
 import {
 	DocumentBuilder,
@@ -9,6 +9,8 @@ import {
 	SwaggerDocumentOptions,
 	SwaggerModule
 } from '@nestjs/swagger';
+
+const swaggerApiPrefix = '';
 
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule, {
@@ -25,6 +27,8 @@ async function bootstrap() {
 
 	app.use(cookieParser());
 
+	// app.setGlobalPrefix('v1');
+
 	// swagger openapi
 	const config = new DocumentBuilder()
 		.setTitle(process.env.SWAGGER_OPENAPI_TITLE)
@@ -34,6 +38,10 @@ async function bootstrap() {
 			process.env.SWAGGER_OPENAPI_AUTHOR,
 			process.env.SWAGGER_OPENAPI_WEBSITE,
 			process.env.SWAGGER_OPENAPI_CONTACT
+		)
+		.setExternalDoc(
+			'api-json',
+			`http://${process.env.APP_URL}:${process.env.APP_PORT}/${swaggerApiPrefix}-json`
 		)
 		.setLicense('MIT', '')
 		.addServer(
@@ -58,7 +66,7 @@ async function bootstrap() {
 	};
 
 	const docOptions: SwaggerDocumentOptions = {
-		ignoreGlobalPrefix: true,
+		ignoreGlobalPrefix: false,
 		operationIdFactory: (controllerKey: string, methodKey: string) =>
 			methodKey
 	};
@@ -68,7 +76,7 @@ async function bootstrap() {
 		config,
 		docOptions
 	);
-	SwaggerModule.setup('api', app, document, customOptions);
+	SwaggerModule.setup(swaggerApiPrefix, app, document, customOptions);
 	await app.listen(process.env.APP_PORT);
 	console.log(`Application is running on: ${await app.getUrl()}`);
 }

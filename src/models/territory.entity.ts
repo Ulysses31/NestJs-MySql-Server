@@ -1,4 +1,3 @@
-import { BaseEntity } from './../core/models/base.entity';
 import { RegionEntity } from './region.entity';
 import { EmployeeEntity } from './employee.entity';
 import {
@@ -9,10 +8,14 @@ import {
 	ManyToMany,
 	ManyToOne
 } from 'typeorm';
+import { BaseCoreEntity } from 'src/core/models/base.entity';
 
-@Index('FK_Territories_Region', ['regionId'], {})
+/**
+ * TerritoryEntity entity
+ */
+@Index('RegionID', ['regionId'], {})
 @Entity({ name: 'territories', schema: 'northwind' })
-export class TerritoryEntity extends BaseEntity {
+export class TerritoryEntity extends BaseCoreEntity {
 	@Column('varchar', {
 		primary: true,
 		name: 'TerritoryID',

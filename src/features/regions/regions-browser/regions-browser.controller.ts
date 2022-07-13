@@ -1,5 +1,5 @@
 import { RegionsService } from './../service/regions.service';
-import { Controller, Get, UseGuards, Version } from '@nestjs/common';
+import { Controller, Get, Version } from '@nestjs/common';
 import { BaseBrowserController } from 'src/core/base-browser-controller';
 import {
 	ApiTags,
@@ -11,12 +11,14 @@ import {
 	ApiInternalServerErrorResponse,
 	ApiProduces,
 	ApiOkResponse,
-	ApiBearerAuth,
 	ApiOperation
 } from '@nestjs/swagger';
-import { JwtAuthGuard } from 'src/core/authentication/jwt-auth.guard';
 import { RegionEntity } from 'src/models/region.entity';
 
+/**
+ * RegionsBrowserController
+ * @extends BaseBrowserController<RegionEntity>
+ */
 @Controller('Regions')
 //@UseGuards(JwtAuthGuard)
 @ApiTags('Regions')
@@ -32,10 +34,14 @@ import { RegionEntity } from 'src/models/region.entity';
 	description: 'Internal Server Error'
 })
 export class RegionsBrowserController extends BaseBrowserController<RegionEntity> {
-	constructor(public RegionsService: RegionsService) {
-		super(RegionsService);
+	constructor(public regionsService: RegionsService) {
+		super(regionsService);
 	}
 
+	/**
+	 * Find all
+	 * @returns Promise<RegionEntity[]>
+	 */
 	@Get()
 	@Version('1')
 	@ApiOperation({ description: 'List of Regions' })

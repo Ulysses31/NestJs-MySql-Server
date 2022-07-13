@@ -1,4 +1,4 @@
-import { Controller, Get, UseGuards, Version } from '@nestjs/common';
+import { Controller, Get, Version } from '@nestjs/common';
 import { BaseBrowserController } from 'src/core/base-browser-controller';
 import {
 	ApiTags,
@@ -10,13 +10,15 @@ import {
 	ApiInternalServerErrorResponse,
 	ApiProduces,
 	ApiOkResponse,
-	ApiBearerAuth,
 	ApiOperation
 } from '@nestjs/swagger';
-import { JwtAuthGuard } from 'src/core/authentication/jwt-auth.guard';
-import { CustomersService } from '../service/Customers.service';
-import { CustomerEntity } from 'src/models/Customer.entity';
+import { CustomersService } from './../service/customers.service';
+import { CustomersEntity } from 'src/models/customer.entity';
 
+/**
+ * CustomersBrowserController
+ * @extends BaseBrowserController<CustomersEntity>
+ */
 @Controller('Customers')
 //@UseGuards(JwtAuthGuard)
 @ApiTags('Customers')
@@ -31,17 +33,21 @@ import { CustomerEntity } from 'src/models/Customer.entity';
 @ApiInternalServerErrorResponse({
 	description: 'Internal Server Error'
 })
-export class CustomersBrowserController extends BaseBrowserController<CustomerEntity> {
+export class CustomersBrowserController extends BaseBrowserController<CustomersEntity> {
 	constructor(public customersService: CustomersService) {
 		super(customersService);
 	}
 
+	/**
+	 * Find all
+	 * @returns Promise<CustomersEntity[]>
+	 */
 	@Get()
 	@Version('1')
 	@ApiOperation({ description: 'List of Customers' })
 	@ApiProduces('application/json', 'application/xml')
-	@ApiOkResponse({ description: 'OK success', type: CustomerEntity })
-	findAllV1(): Promise<CustomerEntity[]> {
+	@ApiOkResponse({ description: 'OK success', type: CustomersEntity })
+	findAllV1(): Promise<CustomersEntity[]> {
 		return this.findDtoAll();
 	}
 }

@@ -1,8 +1,12 @@
 import { BaseService } from './services/base.service';
-import { BaseEntity } from './models/base.entity';
+import { BaseCoreEntity } from './models/base.entity';
 
+/**
+ * BaseBrowserController<TModel>
+ * @extends TModel BaseCoreEntity
+ */
 export abstract class BaseBrowserController<
-	TModel extends BaseEntity
+	TModel extends BaseCoreEntity
 > {
 	model?: TModel[] = [];
 
@@ -10,7 +14,11 @@ export abstract class BaseBrowserController<
 
 	constructor(public baseService: BaseService<TModel>) {}
 
-	findDtoAll(): Promise<TModel[]> {
-		return this.baseService.findAll();
+	/**
+	 * Get list of dtos
+	 * @returns Promise<TModel[]>
+	 */
+	async findDtoAll(): Promise<TModel[]> {
+		return await this.baseService.findAll();
 	}
 }

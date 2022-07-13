@@ -5,8 +5,8 @@ import { Module } from '@nestjs/common';
 import { ProductsBrowserController } from './products-browser/products-browser.controller';
 import { ProductsEditorController } from './products-editor/products-editor.controller';
 import { ProductsRepository } from './service/products-repository';
-import { ProductsService } from './service/Products.service';
 import { ProductsSubscriber } from './service/products.subscriber';
+import { ProductsService } from './service/products.service';
 
 @Module({
 	imports: [

@@ -1,7 +1,7 @@
-import { BaseEntity } from './../core/models/base.entity';
+import { BaseCoreEntity } from './../core/models/base.entity';
 import { ShipperEntity } from './shipper.entity';
 import { EmployeeEntity } from './employee.entity';
-import { CustomerEntity } from './customer.entity';
+import { CustomersEntity } from './customer.entity';
 import { OrderDetailEntity } from './order-detail.entity';
 import {
 	Column,
@@ -12,11 +12,19 @@ import {
 	OneToMany
 } from 'typeorm';
 
-@Index('FK_Orders_Customers', ['customerId'], {})
-@Index('FK_Orders_Employees', ['employeeId'], {})
-@Index('FK_Orders_Shippers', ['shipVia'], {})
+/**
+ * OrderEntity entity
+ */
+@Index('CustomerID', ['customerId'], {})
+@Index('CustomersOrders', ['customerId'], {})
+@Index('EmployeeID', ['employeeId'], {})
+@Index('EmployeesOrders', ['employeeId'], {})
+@Index('OrderDate', ['orderDate'], {})
+@Index('ShippedDate', ['shippedDate'], {})
+@Index('ShippersOrders', ['shipVia'], {})
+@Index('ShipPostalCode', ['shipPostalCode'], {})
 @Entity({ name: 'orders', schema: 'northwind' })
-export class OrderEntity extends BaseEntity {
+export class OrderEntity extends BaseCoreEntity {
 	@Column('int', { primary: true, name: 'OrderID' })
 	orderId: number;
 
@@ -87,14 +95,14 @@ export class OrderEntity extends BaseEntity {
 	)
 	orderDetails: OrderDetailEntity[];
 
-	@ManyToOne(() => CustomerEntity, (customers) => customers.orders, {
+	@ManyToOne(() => CustomersEntity, (customers) => customers.orders, {
 		onDelete: 'NO ACTION',
 		onUpdate: 'NO ACTION'
 	})
 	@JoinColumn([
 		{ name: 'CustomerID', referencedColumnName: 'customerId' }
 	])
-	customer: CustomerEntity;
+	customer: CustomersEntity;
 
 	@ManyToOne(() => EmployeeEntity, (employees) => employees.orders, {
 		onDelete: 'NO ACTION',

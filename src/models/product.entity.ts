@@ -1,4 +1,3 @@
-import { BaseEntity } from './../core/models/base.entity';
 import { SupplierEntity } from './supplier.entity';
 import { OrderDetailEntity } from './order-detail.entity';
 import {
@@ -10,12 +9,23 @@ import {
 	OneToMany
 } from 'typeorm';
 import { CategoryEntity } from './category.entity';
+import { BaseCoreEntity } from 'src/core/models/base.entity';
 
-@Index('FK_Products_Categories', ['categoryId'], {})
-@Index('FK_Products_Suppliers', ['supplierId'], {})
+/**
+ * ProductEntity entity
+ */
+@Index('CategoriesProducts', ['categoryId'], {})
+@Index('CategoryID', ['categoryId'], {})
+@Index('ProductName', ['productName'], {})
+@Index('SupplierID', ['supplierId'], {})
+@Index('SuppliersProducts', ['supplierId'], {})
 @Entity({ name: 'products', schema: 'northwind' })
-export class ProductEntity extends BaseEntity {
-	@Column('int', { primary: true, name: 'ProductID' })
+export class ProductEntity extends BaseCoreEntity {
+	@Column('int', {
+		primary: true,
+		name: 'ProductID',
+		generated: 'increment'
+	})
 	productId: number;
 
 	@Column('varchar', { name: 'ProductName', length: 40 })

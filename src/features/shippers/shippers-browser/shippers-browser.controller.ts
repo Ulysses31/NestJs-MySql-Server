@@ -1,5 +1,5 @@
 import { ShippersService } from './../service/shippers.service';
-import { Controller, Get, UseGuards, Version } from '@nestjs/common';
+import { Controller, Get, Version } from '@nestjs/common';
 import { BaseBrowserController } from 'src/core/base-browser-controller';
 import {
 	ApiTags,
@@ -11,12 +11,14 @@ import {
 	ApiInternalServerErrorResponse,
 	ApiProduces,
 	ApiOkResponse,
-	ApiBearerAuth,
 	ApiOperation
 } from '@nestjs/swagger';
-import { JwtAuthGuard } from 'src/core/authentication/jwt-auth.guard';
 import { ShipperEntity } from 'src/models/shipper.entity';
 
+/**
+ * ShippersBrowserController
+ * @extends BaseBrowserController<ShipperEntity>
+ */
 @Controller('Shippers')
 //@UseGuards(JwtAuthGuard)
 @ApiTags('Shippers')
@@ -32,10 +34,14 @@ import { ShipperEntity } from 'src/models/shipper.entity';
 	description: 'Internal Server Error'
 })
 export class ShippersBrowserController extends BaseBrowserController<ShipperEntity> {
-	constructor(public ShippersService: ShippersService) {
-		super(ShippersService);
+	constructor(public shippersService: ShippersService) {
+		super(shippersService);
 	}
 
+	/**
+	 * Find all
+	 * @returns Promise<ShipperEntity[]>
+	 */
 	@Get()
 	@Version('1')
 	@ApiOperation({ description: 'List of Shippers' })

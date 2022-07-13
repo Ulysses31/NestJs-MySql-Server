@@ -8,7 +8,6 @@ import {
 	ParseIntPipe,
 	Post,
 	Put,
-	UseGuards,
 	Version
 } from '@nestjs/common';
 import { BaseEditorController } from 'src/core/base-Editor-controller';
@@ -25,14 +24,16 @@ import {
 	ApiBody,
 	ApiConsumes,
 	ApiCreatedResponse,
-	ApiBearerAuth,
 	ApiOperation
 } from '@nestjs/swagger';
-import { JwtAuthGuard } from 'src/core/authentication/jwt-auth.guard';
 import { InsertResult, UpdateResult, DeleteResult } from 'typeorm';
 import { CustomerCustomerDemoEntity } from 'src/models/customer-customer-demo.entity';
 import { CustomerCustomerDemosService } from '../service/customer-customer-demo.service';
 
+/**
+ * CustomerCustomerDemosEditorController
+ * @extends BaseEditorController<CustomerCustomerDemoEntity>
+ */
 @Controller('CustomerCustomerDemos')
 // @UseGuards(JwtAuthGuard)
 @ApiTags('CustomerCustomerDemos')
@@ -54,6 +55,11 @@ export class CustomerCustomerDemosEditorController extends BaseEditorController<
 		super(customerCustomerDemoservice);
 	}
 
+	/**
+	 * Find by id
+	 * @param id string
+	 * @returns Promise<CustomerCustomerDemoEntity>
+	 */
 	@Get(':id')
 	@Version('1')
 	@ApiOperation({ description: 'Get CustomerCustomerDemo by id' })
@@ -74,6 +80,11 @@ export class CustomerCustomerDemosEditorController extends BaseEditorController<
 		return this.findDtoById(id);
 	}
 
+	/**
+	 * New dto
+	 * @param dto CustomerCustomerDemoEntity
+	 * @returns Promise<InsertResult>
+	 */
 	@Post()
 	@Version('1')
 	@ApiOperation({ description: 'Insert new CustomerCustomerDemo' })
@@ -90,6 +101,12 @@ export class CustomerCustomerDemosEditorController extends BaseEditorController<
 		return this.insertNewDto(dto);
 	}
 
+	/**
+	 * Update dto
+	 * @param id number
+	 * @param dto CustomerCustomerDemoEntity
+	 * @returns Promise<UpdateResult>
+	 */
 	@Put(':id')
 	@Version('1')
 	@ApiOperation({
@@ -115,6 +132,11 @@ export class CustomerCustomerDemosEditorController extends BaseEditorController<
 		return this.modifyDto(id, dto);
 	}
 
+	/**
+	 * Delete dto
+	 * @param id number
+	 * @returns Promise<DeleteResult>
+	 */
 	@Delete(':id')
 	@Version('1')
 	@ApiOperation({ description: 'Delete CustomerCustomerDemo' })

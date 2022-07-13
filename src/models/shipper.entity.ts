@@ -1,9 +1,12 @@
-import { BaseEntity } from './../core/models/base.entity';
 import { OrderEntity } from './order.entity';
 import { Column, Entity, OneToMany } from 'typeorm';
+import { BaseCoreEntity } from 'src/core/models/base.entity';
 
+/**
+ * ShipperEntity entity
+ */
 @Entity({ name: 'shippers', schema: 'northwind' })
-export class ShipperEntity extends BaseEntity {
+export class ShipperEntity extends BaseCoreEntity {
 	@Column('int', { primary: true, name: 'ShipperID' })
 	shipperId: number;
 

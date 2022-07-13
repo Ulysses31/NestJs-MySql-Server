@@ -1,10 +1,18 @@
-import { BaseEntity } from './../core/models/base.entity';
 import { ProductEntity } from './product.entity';
-import { Column, Entity, OneToMany } from 'typeorm';
+import { Column, Entity, Index, OneToMany } from 'typeorm';
+import { BaseCoreEntity } from 'src/core/models/base.entity';
 
+/**
+ * CategoryEntity entity
+ */
+@Index('CategoryName', ['categoryName'], {})
 @Entity({ name: 'categories', schema: 'northwind' })
-export class CategoryEntity extends BaseEntity {
-	@Column('int', { primary: true, name: 'CategoryID' })
+export class CategoryEntity extends BaseCoreEntity {
+	@Column('int', {
+		primary: true,
+		name: 'CategoryID',
+		generated: 'increment'
+	})
 	categoryId: number;
 
 	@Column('varchar', { name: 'CategoryName', length: 15 })
@@ -13,8 +21,8 @@ export class CategoryEntity extends BaseEntity {
 	@Column('longtext', { name: 'Description', nullable: true })
 	description: string | null;
 
-	@Column('longblob', { name: 'Picture', nullable: true })
-	picture: Buffer | null;
+	// @Column('longblob', { name: 'Picture', nullable: true })
+	// picture: Buffer | null;
 
 	@OneToMany(() => ProductEntity, (products) => products.category)
 	products: ProductEntity[];

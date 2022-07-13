@@ -1,5 +1,5 @@
 import { BaseRepository } from './base-repository';
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import {
 	DeleteResult,
 	InsertResult,
@@ -8,10 +8,11 @@ import {
 } from 'typeorm';
 import { IBaseService } from './base.service.interface';
 import { InjectRepository } from '@nestjs/typeorm';
+import { handleError } from 'src/shared/shared';
 
-const headers = {
-	ContentType: 'json'
-};
+// const headers = {
+// 	ContentType: 'json'
+// };
 
 @Injectable()
 export class BaseService<TModel> implements IBaseService<TModel> {
@@ -20,134 +21,49 @@ export class BaseService<TModel> implements IBaseService<TModel> {
 		public readonly bsRepo: Repository<TModel>
 	) {}
 
-	findAll(): Promise<TModel[]> {
-		return this.bsRepo.find();
-		// return this.httpService.get<TModel[]>(this._apiUrl).pipe(
-		// 	tap((res) => console.log(res)),
-		// 	catchError((err) => {
-		// 		console.log(err);
-		// 		return of(err.response);
-		// 	}),
-		// 	map((res) => {
-		// 		var axiosResp: AxiosResponse<TModel[]> = {
-		// 			status: res.status,
-		// 			statusText: res.statusText,
-		// 			headers: res.headers,
-		// 			config: res.config,
-		// 			// request: res.request,
-		// 			data: res.data
-		// 		};
-		// 		Logger.log(
-		// 			`Status: ${res.status} - StatusText: ${res.statusText}`
-		// 		);
-		// 		return axiosResp;
-		// 	})
-		// );
+	async findAll(): Promise<TModel[]> {
+		try {
+			const data = await this.bsRepo.find();
+			return await Promise.resolve(data);
+		} catch (err) {
+			throw handleError(err);
+		}
 	}
 
-	findOne(id: any): Promise<TModel> {
-		return this.bsRepo.findOne(id);
-		// 	// return this.httpService.get<TModel>(`${this._apiUrl}/${id}`).pipe(
-		// 	// 	tap((res) => console.log(res)),
-		// 	// 	catchError((err) => {
-		// 	// 		console.log(err);
-		// 	// 		return of(err.response);
-		// 	// 	}),
-		// 	// 	map((res) => {
-		// 	// 		var axiosResp: AxiosResponse<TModel> = {
-		// 	// 			status: res.status,
-		// 	// 			statusText: res.statusText,
-		// 	// 			headers: res.headers,
-		// 	// 			config: res.config,
-		// 	// 			// request: res.request,
-		// 	// 			data: res.data
-		// 	// 		};
-		// 	// 		Logger.log(
-		// 	// 			`Status: ${res.status} - StatusText: ${res.statusText}`
-		// 	// 		);
-		// 	// 		return axiosResp;
-		// 	// 	})
-		// 	// );
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	async findOne(id: any): Promise<TModel> {
+		try {
+			const data = await this.bsRepo.findOneBy({});
+			return await Promise.resolve(data);
+		} catch (err) {
+			throw handleError(err);
+		}
 	}
 
-	create(dto: TModel): Promise<InsertResult> {
-		return this.bsRepo.insert(dto);
-		//return this.httpService
-		//	.post<TModel>(`${this._apiUrl}`, dto, { headers })
-		//	.pipe(
-		//		tap((res) => console.log(res)),
-		//		catchError((err) => {
-		//			console.log(err);
-		//			return of(err.response);
-		//		}),
-		//		map((res) => {
-		//			var axiosResp: AxiosResponse<TModel> = {
-		//				status: res.status,
-		//				statusText: res.statusText,
-		//				headers: res.headers,
-		//				config: res.config,
-		//				// request: res.request,
-		//				data: res.data
-		//			};
-		//			Logger.log(
-		//				`Status: ${res.status} - StatusText: ${res.statusText}`
-		//			);
-		//			return axiosResp;
-		//		})
-		//	);
+	async create(dto: any): Promise<InsertResult> {
+		try {
+			const data = await this.bsRepo.insert(dto);
+			return await Promise.resolve(data);
+		} catch (err) {
+			throw handleError(err);
+		}
 	}
 
-	update(id: number, dto: TModel): Promise<UpdateResult> {
-		return this.bsRepo.update(id, dto);
-		// return this.httpService
-		// 	.put<TModel>(`${this._apiUrl}/${id}`, dto, { headers })
-		// 	.pipe(
-		// 		tap((res) => console.log(res)),
-		// 		catchError((err) => {
-		// 			console.log(err);
-		// 			return of(err.response);
-		// 		}),
-		// 		map((res) => {
-		// 			var axiosResp: AxiosResponse<TModel> = {
-		// 				status: res.status,
-		// 				statusText: res.statusText,
-		// 				headers: res.headers,
-		// 				config: res.config,
-		// 				// request: res.request,
-		// 				data: res.data
-		// 			};
-		// 			Logger.log(
-		// 				`Status: ${res.status} - StatusText: ${res.statusText}`
-		// 			);
-		// 			return axiosResp;
-		// 		})
-		// 	);
+	async update(id: number, dto: any): Promise<UpdateResult> {
+		try {
+			const data = await this.bsRepo.update(id, dto);
+			return await Promise.resolve(data);
+		} catch (err) {
+			throw handleError(err);
+		}
 	}
 
-	remove(id: number): Promise<DeleteResult> {
-		return this.bsRepo.delete(id);
-		// return this.httpService
-		// 	.delete<TModel>(`${this._apiUrl}/${id}`)
-		// 	.pipe(
-		// 		tap((res) => console.log(res)),
-		// 		catchError((err) => {
-		// 			console.log(err);
-		// 			return of(err.response);
-		// 		}),
-		// 		map((res) => {
-		// 			var axiosResp: AxiosResponse<TModel> = {
-		// 				status: res.status,
-		// 				statusText: res.statusText,
-		// 				headers: res.headers,
-		// 				config: res.config,
-		// 				// request: res.request,
-		// 				data: res.data
-		// 			};
-		// 			Logger.log(
-		// 				`Status: ${res.status} - StatusText: ${res.statusText}`
-		// 			);
-		// 			return axiosResp;
-		// 		})
-		// 	);
+	async remove(id: number): Promise<DeleteResult> {
+		try {
+			const data = await this.bsRepo.delete(id);
+			return await Promise.resolve(data);
+		} catch (err) {
+			throw handleError(err);
+		}
 	}
 }

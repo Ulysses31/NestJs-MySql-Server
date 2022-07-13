@@ -1,4 +1,4 @@
-import { BaseBrowserController } from './base-browser-controller';
+// import { BaseBrowserController } from './base-browser-controller';
 
 describe('BaseBrowserController', () => {
 	it('should be defined', () => {

@@ -1,5 +1,5 @@
 import { CustomerCustomerDemosService } from './../service/customer-customer-demo.service';
-import { Controller, Get, UseGuards, Version } from '@nestjs/common';
+import { Controller, Get, Version } from '@nestjs/common';
 import { BaseBrowserController } from 'src/core/base-browser-controller';
 import {
 	ApiTags,
@@ -11,12 +11,14 @@ import {
 	ApiInternalServerErrorResponse,
 	ApiProduces,
 	ApiOkResponse,
-	ApiBearerAuth,
 	ApiOperation
 } from '@nestjs/swagger';
-import { JwtAuthGuard } from 'src/core/authentication/jwt-auth.guard';
 import { CustomerCustomerDemoEntity } from 'src/models/customer-customer-demo.entity';
 
+/**
+ * CustomerCustomerDemosBrowserController
+ * @extends BaseBrowserController<CustomerCustomerDemoEntity>
+ */
 @Controller('CustomerCustomerDemos')
 //@UseGuards(JwtAuthGuard)
 @ApiTags('CustomerCustomerDemos')
@@ -38,6 +40,10 @@ export class CustomerCustomerDemosBrowserController extends BaseBrowserControlle
 		super(customerCustomerDemosService);
 	}
 
+	/**
+	 * Find all
+	 * @returns Promise<CustomerCustomerDemoEntity[]>
+	 */
 	@Get()
 	@Version('1')
 	@ApiOperation({ description: 'List of CustomerCustomerDemos' })

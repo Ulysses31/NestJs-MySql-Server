@@ -8,7 +8,6 @@ import {
 	ParseIntPipe,
 	Post,
 	Put,
-	UseGuards,
 	Version
 } from '@nestjs/common';
 import { BaseEditorController } from 'src/core/base-Editor-controller';
@@ -25,14 +24,16 @@ import {
 	ApiBody,
 	ApiConsumes,
 	ApiCreatedResponse,
-	ApiBearerAuth,
 	ApiOperation
 } from '@nestjs/swagger';
-import { JwtAuthGuard } from 'src/core/authentication/jwt-auth.guard';
 import { InsertResult, UpdateResult, DeleteResult } from 'typeorm';
 import { EmployeeTerritoryEntity } from 'src/models/employee-territory.entity';
 import { EmployeesTerritoriesService } from '../service/employees-territories.service';
 
+/**
+ * EmployeesTerritoriesEditorController
+ * @extends BaseEditorController<EmployeeTerritoryEntity>
+ */
 @Controller('EmployeesTerritories')
 // @UseGuards(JwtAuthGuard)
 @ApiTags('EmployeesTerritories')
@@ -54,6 +55,11 @@ export class EmployeesTerritoriesEditorController extends BaseEditorController<E
 		super(employeesTerritorieservice);
 	}
 
+	/**
+	 * Find by id
+	 * @param id string
+	 * @returns Promise<EmployeeTerritoryEntity>
+	 */
 	@Get(':id')
 	@Version('1')
 	@ApiOperation({ description: 'Get EmployeeTerritory by id' })
@@ -74,6 +80,11 @@ export class EmployeesTerritoriesEditorController extends BaseEditorController<E
 		return this.findDtoById(id);
 	}
 
+	/**
+	 * New dto
+	 * @param dto EmployeeTerritoryEntity
+	 * @returns Promise<InsertResult>
+	 */
 	@Post()
 	@Version('1')
 	@ApiOperation({ description: 'Insert new EmployeeTerritory' })
@@ -90,6 +101,12 @@ export class EmployeesTerritoriesEditorController extends BaseEditorController<E
 		return this.insertNewDto(dto);
 	}
 
+	/**
+	 * Update dto
+	 * @param id number
+	 * @param dto EmployeeTerritoryEntity
+	 * @returns Promise<UpdateResult>
+	 */
 	@Put(':id')
 	@Version('1')
 	@ApiOperation({ description: 'Update existing EmployeeTerritory' })
@@ -113,6 +130,11 @@ export class EmployeesTerritoriesEditorController extends BaseEditorController<E
 		return this.modifyDto(id, dto);
 	}
 
+	/**
+	 * Delete dto
+	 * @param id number
+	 * @returns Promise<DeleteResult>
+	 */
 	@Delete(':id')
 	@Version('1')
 	@ApiOperation({ description: 'Delete EmployeeTerritory' })
