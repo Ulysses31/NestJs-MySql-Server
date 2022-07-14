@@ -15,7 +15,7 @@ import { handleError } from 'src/shared/shared';
 // };
 
 /**
- * BaseService<TModel> 
+ * BaseService<TModel>
  * @implements IBaseService<TModel>
  */
 @Injectable()
@@ -27,7 +27,7 @@ export class BaseService<TModel> implements IBaseService<TModel> {
 
 	/**
 	 * Find all
-	 * @returns Promise<TModel[]> 
+	 * @returns Promise<TModel[]>
 	 */
 	async findAll(): Promise<TModel[]> {
 		try {
@@ -71,7 +71,7 @@ export class BaseService<TModel> implements IBaseService<TModel> {
 	 * Update dto
 	 * @param id number
 	 * @param dto any
-	 * @returns Promise<UpdateResult> 
+	 * @returns Promise<UpdateResult>
 	 */
 	async update(id: number, dto: any): Promise<UpdateResult> {
 		try {

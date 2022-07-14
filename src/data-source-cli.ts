@@ -27,6 +27,7 @@ import { RegionsSubscriber } from './features/regions/service/regions.subscriber
 import { ShippersSubscriber } from './features/shippers/service/shippers.subscriber';
 import { SuppliersSubscriber } from './features/suppliers/service/suppliers.subscriber';
 import { TerritoriesSubscriber } from './features/territories/service/territories.subscriber';
+import { join } from 'path';
 
 export const AppDataSourceCli = new DataSource({
 	type: 'mysql',
@@ -35,41 +36,47 @@ export const AppDataSourceCli = new DataSource({
 	username: 'root',
 	password: '',
 	database: 'northwind',
-	logging: true,
+	logging: 'all',
+	logger: 'debug',
+	debug: true,
 	synchronize: false,
 	trace: true,
-	relationLoadStrategy: 'join',
-	entities: [
-		UserEntity,
-		CustomerCustomerDemoEntity,
-		CategoryEntity,
-		CustomerDemographicEntity,
-		CustomersEntity,
-		EmployeeTerritoryEntity,
-		EmployeeEntity,
-		OrderDetailEntity,
-		OrderEntity,
-		ProductEntity,
-		RegionEntity,
-		ShipperEntity,
-		SupplierEntity,
-		TerritoryEntity
-	],
-	subscribers: [
-		BaseSubscriber,
-		CategoriesSubscriber,
-		ProductsSubscriber,
-		OrdersSubscriber,
-		OrderDetailsSubscriber,
-		CustomersSubscriber,
-		EmployeesSubscriber,
-		RegionsSubscriber,
-		ShippersSubscriber,
-		SuppliersSubscriber,
-		TerritoriesSubscriber,
-		CustomerDemographicsSubscriber,
-		EmployeesTerritoriesSubscriber,
-		CustomerCustomerDemosSubscriber
-	],
-	migrations: []
+	entities: [join(__dirname, '/.././dist/models/**/', '*.js')],
+	subscribers: [join(__dirname, '/.././dist/**/', '*.subscriber.js')],
+	migrations: [
+		join(__dirname, '/src/migrations/**/', '*-migration.ts')
+	]
+	// entities: [
+	// 	UserEntity,
+	// 	CustomerCustomerDemoEntity,
+	// 	CategoryEntity,
+	// 	CustomerDemographicEntity,
+	// 	CustomersEntity,
+	// 	EmployeeTerritoryEntity,
+	// 	EmployeeEntity,
+	// 	OrderDetailEntity,
+	// 	OrderEntity,
+	// 	ProductEntity,
+	// 	RegionEntity,
+	// 	ShipperEntity,
+	// 	SupplierEntity,
+	// 	TerritoryEntity
+	// ],
+	// subscribers: [
+	// 	BaseSubscriber,
+	// 	CategoriesSubscriber,
+	// 	ProductsSubscriber,
+	// 	OrdersSubscriber,
+	// 	OrderDetailsSubscriber,
+	// 	CustomersSubscriber,
+	// 	EmployeesSubscriber,
+	// 	RegionsSubscriber,
+	// 	ShippersSubscriber,
+	// 	SuppliersSubscriber,
+	// 	TerritoriesSubscriber,
+	// 	CustomerDemographicsSubscriber,
+	// 	EmployeesTerritoriesSubscriber,
+	// 	CustomerCustomerDemosSubscriber
+	// ],
+	// migrations: []
 });

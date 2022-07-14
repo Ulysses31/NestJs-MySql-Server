@@ -10,7 +10,7 @@ import {
 	SwaggerModule
 } from '@nestjs/swagger';
 
-const swaggerApiPrefix = 'api';
+const swaggerApiPrefix = '';
 
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule, {

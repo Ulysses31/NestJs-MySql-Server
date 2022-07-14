@@ -7,7 +7,7 @@ import {
 } from 'typeorm';
 
 /**
- * BaseRepository<TModel> 
+ * BaseRepository<TModel>
  * @extends Repository<TModel>
  */
 @Injectable()

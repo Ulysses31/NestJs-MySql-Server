@@ -66,9 +66,10 @@ import { BaseSubscriber } from './core/services/base.subscriber';
 				CustomerCustomerDemosSubscriber
 			],
 			autoLoadEntities: true,
-			debug: process.env.DATABASE_DEBUG === 'true',
+			trace: true,
 			logging: 'all',
-			logger: 'advanced-console',
+			logger: 'debug',
+			debug: process.env.DATABASE_DEBUG === 'true',
 			synchronize: process.env.DATABASE_SYNC === 'true' // only in develepment mode is true
 		}),
 		AuthModule,
